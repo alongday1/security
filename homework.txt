@@ -1,6 +1,9 @@
 lxr1
 lxr2
 lxr3
-lxr11
-lxr22
-lxr33
+qsq1
+qsq2
+qsq3
+zyy1
+zyy2
+zyy3
