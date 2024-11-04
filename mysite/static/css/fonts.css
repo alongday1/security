@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'PermanentMarker';
+    src:  url('/static/font/PermanentMarker-Regular.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Itim';
+    src:  url('/static/font/Itim-Regular.ttf') format('truetype');
+    font-weight:100;
+    font-style:normal;
+}

@@ -1,0 +1,218 @@
+[
+{
+    "model": "review.tag",
+    "pk": 36,
+    "fields": {
+        "name": "清淡",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 37,
+    "fields": {
+        "name": "麻辣",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 38,
+    "fields": {
+        "name": "重油",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 39,
+    "fields": {
+        "name": "昂贵",
+        "type": 5
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 40,
+    "fields": {
+        "name": "实惠",
+        "type": 5
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 41,
+    "fields": {
+        "name": "廉价",
+        "type": 5
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 42,
+    "fields": {
+        "name": "小吃",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 43,
+    "fields": {
+        "name": "汤羹",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 44,
+    "fields": {
+        "name": "粉类",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 45,
+    "fields": {
+        "name": "面食",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 46,
+    "fields": {
+        "name": "饭食",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 47,
+    "fields": {
+        "name": "干香",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 48,
+    "fields": {
+        "name": "咸香",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 49,
+    "fields": {
+        "name": "微甜",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 50,
+    "fields": {
+        "name": "酸爽",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 51,
+    "fields": {
+        "name": "鲜美",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 52,
+    "fields": {
+        "name": "蔬菜",
+        "type": 4
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 53,
+    "fields": {
+        "name": "红肉",
+        "type": 4
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 54,
+    "fields": {
+        "name": "鱼肉",
+        "type": 4
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 55,
+    "fields": {
+        "name": "家常",
+        "type": 3
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 57,
+    "fields": {
+        "name": "西式",
+        "type": 3
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 58,
+    "fields": {
+        "name": "大份",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 59,
+    "fields": {
+        "name": "自选",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 60,
+    "fields": {
+        "name": "口味多样",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 61,
+    "fields": {
+        "name": "热门",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 62,
+    "fields": {
+        "name": "测试",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 65,
+    "fields": {
+        "name": "dfsfd",
+        "type": 0
+    }
+}
+]

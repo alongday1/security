@@ -1,0 +1,73 @@
+{% load static %}
+
+<ul class="list-unstyled mb-4">
+    <li>
+        {% if page_obj.object_list|length == 0 %}
+        <ul class="topic list-unstyled text-center">
+            暂无评价
+        </ul>
+        {% endif %}
+        {% for comment in page_obj.object_list %}
+        <ul class="topic list-unstyled row mx-0 justify-content-between align-items-center">
+            <li class="col-sm-2">
+                <div class="user-name">{{ comment.user.username }}</div>
+                <div class="user-image">
+                    <a href="#"><img alt="User" src="{% static 'review/img/comment_images/user1.jpg' %}"></a>
+                </div>
+            </li>
+            <li class="entry mb-0 col-sm-10">
+                <div style="font-size: 18px; margin-bottom:15px;">{{ comment.content|safe }}</div>
+                <div style="display: flex;gap: 10px;">
+                    {% for image in comment.images.all %}
+                        <a href="#"><img src="{{ image.image.url }}" alt="comment image" style="width:160px;height:120px;object-fit:cover;"></a>
+                    {% endfor %}
+                </div>
+                <div class="entry-meta mt-1">
+                    <ul>
+                        <li style="color:darkgray !important;">{{ comment.datetime|date:"Y-m-d H:i" }}</li>
+                        <li style="color:darkgray !important;">4 likes</li>
+                        <li style="color:darkgray !important;">2 unlikes</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        {% endfor %}
+    </li>
+</ul>
+
+<!-- 分页链接 -->
+<ul class="pagination justify-content-end">
+    {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&dish_id={{ dish_id }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    {% endif %}
+
+    {% for page_num in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_obj.number == page_num %}active{% endif %}">
+            <a class="page-link" href="?page={{ page_num }}&dish_id={{ dish_id }}">{{ page_num }}</a>
+        </li>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}&dish_id={{ dish_id }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" aria-disabled="true">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    {% endif %}
+</ul>

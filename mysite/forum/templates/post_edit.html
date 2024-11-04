@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum_add{% endblock %}
+
+{% block masthead %}{% endblock %}
+
+{% block content %}
+<div class="ui middle stackable center grid wide container" style="margin-top:50px;">
+    <div class="sixteen wide mobile two wided tablet two wide computer column "></div>
+    <div class="sixteen wide mobile twelve wided tablet twelve wide computer column ">
+        <div class="ui segment"
+            style="margin-bottom:40px;padding-top:60px;padding-bottom:60px;padding-left: 50px;padding-right: 50px;">
+            <form class="ui large form error" id="post-form" method="POST" enctype="multipart/form-data" action="{% url 'edit_post' post_id %}">
+                {% csrf_token %}
+                <h4 class="ui horizontal massive divider header">Post Information</h4>
+                <div class="ui divider hidden"></div>
+                <!--  -->
+                <div class="field">
+                    <label>Author: &nbsp; {{ username }}</label>
+                </div>
+                <!--  -->
+                <div>
+                    <!-- title -->
+                    <div class="required field">
+                        <label>Title</label>
+                        <div class="fields">
+                          <div class="sixteen wide field">
+                            <input type="text" name="title" placeholder="Please input title for post..." value="{{ title }}">
+                          </div>
+                        </div>
+                      </div>
+                    <!-- endtitle -->
+                    <!-- forum -->
+                    <div class="required field">
+                        <label>Forum</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="forum_name" value="{{ forum_id }}">
+                            <div class="default text">name</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                {% for forum in forums %}
+                                    <div class="item" data-value="{{ forum.id }}">
+                                        {{ forum.name }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end forum -->
+                    <!-- content -->
+                    <div class="required field">
+                        <label>Content</label>
+                        <textarea id="markdown-editor" name="content">{{ content }}</textarea>
+                    </div>
+                    <!-- end content -->
+                    <!-- image -->
+                    <div class="field">
+                        <label>Upload Images</label>
+                        <input type="file" name="images" accept="image/*" multiple>
+                    </div>
+                    <!-- end image -->
+                    <!-- tags -->
+                    <div class="field">
+                        <label>Tag</label>
+                        <select multiple="" class="ui fluid search dropdown" id="multi-select">
+                            <option value="">Select Tag</option>
+                            {% for tag in tags %}
+                                <option value="{{ tag.name }}" {% if tag.name in tag_names %}selected{% endif %}>{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- end tag -->
+                    <div class="ui divider hidden"></div>
+                    <!-- error message -->
+                    <div class="ui error message hidden">
+                        <div class="header">Submission Failed</div>
+                        <p>{{ error_message }}</p>
+                    </div>
+                    <!-- end error_message -->
+                    <div style="text-align:center ;">
+                        <div class="ui divider hidden "></div>
+                        <button class="ui basic button large brown" onclick="window.location.href='{% url 'forum_post' 1 %}'">Back to Forum</button>
+                        <button class="ui basic brown large button" type= "submit">Save</button>
+                    </div>
+                </div>
+
+            </form>
+            
+        </div>  
+    </div>
+    <div class="sixteen wide mobile two wided tablet two wide computer column"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+$(document)
+    .ready(function() {
+    $('.ui.radio.checkbox')
+        .checkbox()
+    ;
+    $('input[name="type"]').on('change', function() {
+        showContent(this);
+    });
+    $('.selection.dropdown')
+        .dropdown()
+    ;
+    $('#multi-select')
+    .dropdown({
+        keepSearchTerm: true,
+        preserveHTML:false,
+        allowAdditions: true,
+        ignoreSearchCase:false,    
+    });
+    $('.ui.calendar')
+    .calendar()
+    ;
+    $('#post-form').submit(function (event) {
+        event.preventDefault();  
+        
+        var selectedTags = $('#multi-select').dropdown('get value');
+        var formData = new FormData(this);
+        formData.append('tags', selectedTags);
+        console.log(selectedTags);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.status === 'success') {
+                    window.location.href = "{% url 'forum_post' 1 %}";
+                } else {
+                    $('.ui.error.message').removeClass('hidden').addClass('visible').find('p').text(response.message);
+                    $('#multi-select').dropdown('set selected', selectedTags); 
+                    console.log("111");
+                }
+            },
+            error: function () {
+                $('.ui.error.message').removeClass('hidden').addClass('visible').find('p').text('There was an error with the submission.');
+                $('#multi-select').dropdown('set selected', selectedTags); 
+                console.log("222");
+            }
+        });
+    });
+
+})
+;
+
+document.addEventListener("DOMContentLoaded", function() {
+        const easyMDE = new EasyMDE({ 
+            element: document.getElementById("markdown-editor"),
+            spellChecker: false
+        });
+    });
+
+</script>
+{% endblock %}

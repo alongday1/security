@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum_post{% endblock %}
+
+{% block masthead %}{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load custom_filters %}
+{% load markdown_extras %}
+<div class="ui middle stackable center grid wide container" style="margin-top:50px;">
+    <div class="sixteen wide mobile three wided tablet three wide computer column ">
+        <div class="ui left text vertical secondary main hidden_menu menu" style="margin-top:0px;">
+            <div class="item">
+                <div class="ui scrolling search">
+                    <div class="ui icon input">
+                        <input class="prompt" type="text" placeholder="Search posts...">
+                        <i class="search icon"></i>
+                    </div>
+                    <div class="results"></div>
+                </div>
+            </div>
+            <div class="ui hidden divider"></div>
+            {% for forum in forums %}
+            <a class="item" href="{% url 'forum_post' forum.id %}">
+                {% if forum.icon %}
+                <img class="ui avatar image" src="{{ forum.icon.url }}" alt="{{ forum.name }}"
+                    style="margin-right: 12px;" />
+                {% else %}
+                {% endif %}
+                <span>{{ forum.name }}</span>
+                <a />
+                {% endfor %}
+                <div class="ui inverted fitted divider"></div>
+                <a class="item" href="{% url 'group_post_list' %}">
+                    <i class="glass cheers large icon" style="margin-right: 12px;"></i>
+                    <span>
+                        食伴聚会
+                    </span>
+                </a>
+        </div>
+    </div>
+    <div class="sixteen wide mobile ten wided tablet ten wide computer column ">
+        <div class="ui segment"
+            style="margin-bottom:40px;padding-top:60px;padding-bottom:60px;padding-left: 50px;padding-right: 50px;">
+            <div class="ui main text container">
+                <h1 class="ui center aligned header">{{ post.title }}</h1>
+            </div>
+            <div class="ui hidden divider"></div>
+            <div class="ui horizontal list" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="item">
+                    {% if participant.profile.avatar %}
+                        <img src="{{ participant.profile.avatar.url }}" alt="{{ participant.username }}" class="ui circular avatar bordered image" style="filter: invert(0);">
+                    {% else %}
+                        <img src="{% static 'img/avatar/' %}{{ ''|random_avatar }}" alt="默认头像" class="ui circular avatar bordered image" style="filter: invert(0);">
+                    {% endif %}
+                    <div class="content">
+                        <div class="ui sub header">@ {{ post.author }}</div>
+                        last modified at {{ post.last_modified|time_ago }}
+                    </div>
+                </div>
+                {% if current_user == post.author %}
+                <div class="item" style="align-items:right;">
+                    <a href="{% url 'edit_post' post.id %}" style="color:gray;" class="edit-button"><i class="edit large icon"></i></a>
+                    <a href="" class="delete-button" style="color:gray;" data-id="{{ post.id }}"><i class="trash alternate large icon"></i></a>
+                </div>
+                <!-- modal -->
+                <div class="ui basic modal" id="deleteModal">
+                    <div class="header">Confirm Deletion</div>
+                    <div class="content">
+                        <p>Are you sure you want to delete this post?</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui red basic cancel inverted button"><i class="remove icon"></i> No</div>
+                        <div class="ui green basic ok inverted button"><i class="checkmark icon"></i>Yes</div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="ui hidden divider"></div>
+            <div class="description">
+                {{ content|safe }}
+            </div>
+            <div class="ui hidden divider"></div>
+            {% if post.images.all %}
+                <div class="ui vertical items">
+                    {% for image in post.images.all %}
+                        <div class="ui image image-container">
+                            <a href="{{ image.image.url }}" data-lightbox="post-images">
+                                <img src="{{ image.image.url }}" style="filter: invert(0);height: 100%;width: auto;object-fit: cover;" alt="Post image">    
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="ui hidden divider"></div>
+            <div class="ui extra content">
+                {% for tag in post.tag.all %}
+                    <div class="ui label">{{ tag.name }}</div>
+                {% endfor %}
+            </div>
+            <div class="ui divider"></div>
+            <div class="ui list">
+                <div class="ui item ">
+                    <div class="ui content">
+                        <a class="ui like right floated" id="like-button" style="color: grey;">
+                            <i class="heart outline icon grey"></i> {{ post.likes }} Likes
+                        </a>
+                        <i class="eye outline icon grey"></i>
+                        {{ post.click }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sixteen wide mobile two wided tablet three wide computer column">
+        <div class="ui fluid card">
+            <div class="content">
+                <div class="center aligned">
+                    {% if participant.profile.avatar %}
+                        <img src="{{ participant.profile.avatar.url }}" alt="{{ participant.username }}" class="ui circular small bordered imaged" style="filter: invert(0);">
+                    {% else %}
+                        <img src="{% static 'img/avatar/' %}{{ ''|random_avatar }}" alt="默认头像" class="ui circular small bordered imaged" style="filter: invert(0);">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="content">
+                <div class="header">{{ post.author.username}}</div>
+                <div class="meta">
+                    <a>@ {% if post.author.is_staff %} Administrator {% else %} User {% endif %}</a>
+                </div>
+                <div class="description">
+                    <a href="mailto:{{ post.author.email }}" style="color: grey;">
+                        <i class="envelope outline icon"></i>
+                        {{ post.author.email }}
+                    </a>
+                </div>
+            </div>
+            <div class="extra content">
+                <span class="right floated">
+                    Joined in {{ post.author.date_joined|date:"Y-m-d" }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('#like-button').click(function () {
+            $(this).find('i').toggleClass('outline red grey');
+        });
+
+        let postId;
+        $('.delete-button').on('click', function (e) {
+            e.preventDefault();
+            postId = $(this).data('id'); 
+            $('#deleteModal').modal('show');
+        });
+
+        $('#deleteModal .ok.button').on('click', function () {
+            $.ajax({
+                url: `/forum/post/delete/${postId}/`, 
+                type: 'DELETE',
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                },
+                success: function (response) {
+                    localStorage.setItem('postDeleted', 'true');
+                    window.location.href = '/forum/1/';
+                    
+                },
+                error: function (xhr, status, error) {
+                    console.error('Fail to delete error:', error);
+                    alert('Fail to delete the post.Please try it later');
+                }
+            });
+        });
+
+    });
+
+    const apiUrl = "{% url 'search-post' %}?q={query}";
+
+    $(document)
+        .ready(function () {
+            $('.main.menu').visibility({
+                type: 'fixed',
+
+            });
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 60) {
+                    $('.main.menu').css('margin-top', '70px');
+                } else {
+                    $('.main.menu').css('margin-top', '0px');
+                }
+            });
+            $('.ui.search')
+                .search({
+                    preserveHTML: false,
+                    type: 'category',
+                    minCharacters: 1,
+                    showNoResults: true,
+                    apiSettings: {
+                        url: apiUrl,
+                        onResponse: function (apiResponse) {
+                            var response = {
+                                results: {}
+                            };
+
+                            var groupCategory = '食伴聚会';
+
+                            $.each(apiResponse.group_posts, function (index, item) {
+                                if (response.results[groupCategory] === undefined) {
+                                    response.results[groupCategory] = {
+                                        name: groupCategory,
+                                        results: []
+                                    };
+                                }
+                                response.results[groupCategory].results.push({
+                                    title: item.title,
+                                    description: item.sponser_name,
+                                    url: "/forum/group_post/" + item.id,
+                                });
+                            });
+
+                            $.each(apiResponse.posts, function (index, item) {
+                                var forumName = item.forum_name;
+
+                                if (response.results[forumName] === undefined) {
+                                    response.results[forumName] = {
+                                        name: forumName,
+                                        results: []
+                                    };
+                                }
+
+                                response.results[forumName].results.push({
+                                    title: item.title,
+                                    description: item.author_name,
+                                    url: "/forum/post/" + item.id,
+                                });
+                            });
+                            return response;
+                        }
+
+                    },
+                })
+                ;
+        })
+        ;
+        lightbox.option({
+            'fadeDuration': 200,     
+            'resizeDuration': 200,  
+            'wrapAround': true,       
+        });
+</script>
+{% endblock %}

@@ -1,0 +1,199 @@
+.rating {
+    display: inline-flex;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 30px; /* 星星的大小 */
+    color: gold; /* 默认颜色 */
+    transition: color 0.2s;
+}
+
+.star:hover ~ .star {
+    color: lightgray; /* 悬停时星星的颜色 */
+}
+
+.star.selected ~ .star {
+    color: lightgray; /* 选中时星星的颜色 */
+}
+
+.icon-like {
+    font-size: 20px;
+    color: #d75b29;
+}
+
+.icon-like:hover, .icon-like.clicked {
+    color: #ff2b00;
+}
+
+.icon-unlike {
+    font-size: 20px;
+    color: gray;
+}
+
+.icon-unlike:hover, .icon-unlike.clicked {
+    font-size: 20px;
+    color: #1b1b1b;
+}
+
+.tag_button {
+    border: none;
+    border-radius: 8px;
+    height: 40px;
+    background-color: #f2562e;
+    color: #5c2d20;
+    font-size: 17px;
+}
+
+.tag_button_lg {
+    border: none;
+    border-radius: 8px;
+    height: 40px;
+    background-color: #f2562e;
+    color: #5c2d20;
+    font-size: 17px;
+}
+.tag_button.disabled, .tag_button_lg.disabled {
+    border:none;
+    background-color:transparent;
+    color: #5c2d20;
+    cursor:default;
+}
+
+.chart {
+    display: flex;
+    // justify-content: space-around; /* 让条形水平分布 */
+    align-items: flex-end; /* 让条形从底部对齐 */
+    border: none; /* 可选: 为图表添加边框 */
+}
+
+.bar-container {
+    text-align: center;
+    height: 100%; /* 设置容器高度为100% */
+}
+
+.bar {
+    width: 20px;
+    background-color: #3498db;
+    margin-right: 2px; /* 设置条形之间的间距 */
+    transition: height 0.7s ease; /* 可选: 添加动画效果 */
+    background-color: gold;
+}
+
+.label {
+    font-size: 12px;
+    color: #333;
+    margin-top: 5px; /* 设置标签和条形之间的间距 */
+}
+
+.tag-edit {
+    border: none;
+    border-radius: 20px;
+    width: auto;
+    background-color: #f2562e;
+    color: white;
+    font-size: 17px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.tag-edit.activated {
+    background-color: #4b1a70;
+    color: white;
+}
+
+.icon-circle {
+    display: inline-flex; /* 使用 flexbox */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 25px; /* 圆形图标的宽度 */
+    height: 25px; /* 圆形图标的高度 */
+    border-radius: 50%; /* 圆角 */
+    background-color: #007BFF; /* 背景颜色 */
+    color: white; /* 图标颜色 */
+    font-size: 17px; /* 图标大小 */
+    transition: background-color 0.3s; /* 动画效果 */
+}
+
+#tag-confirm {
+    border: none;
+    border-radius: 20px;
+    width: auto;
+    height: 40px;
+    background-color: #f2562e;
+    color: white;
+    font-size: 17px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+#tag_button_add {
+    border: none;
+    border-radius: 20px;
+    width: 90px;
+    height: 40px;
+    background-color: #f2562e;
+    color: white;
+    font-size: 17px;
+}
+
+
+
+.tag-button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid darkgray;
+  border-radius: 20px;
+  width: 65px;
+
+  cursor: pointer;
+  color: dark;
+  background-color: white;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tag-button.selected {
+  background-color: #f2562e;
+  color: white;
+}
+
+.tag-button-lg {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid darkgray;
+  border-radius: 20px;
+  width: 120px;
+  cursor: pointer;
+  color: dark;
+  background-color: white;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tag-button-lg.selected {
+  background-color: #f2562e;
+  color: white;
+}
+
+#show-mine.selected {
+    background-color: var(--cnvs-btn-color);
+}
+
+#button-edit {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+}
+
+#edit-desc {
+    background-color: transparent;
+    border: none;
+}
+
+#tag-edit {
+    background-color: transparent;
+    border: none;
+}

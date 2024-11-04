@@ -1,0 +1,421 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="x-ua-compatible" content="IE=edge">
+	<meta name="author" content="htmlpage">
+    <title>Title</title>
+    <!-- 最新编译并压缩的 CSS -->
+    <link href="https://www.w3school.com.cn/lib/bs/bootstrap.css" rel="stylesheet">
+    <!-- 最新编译的 JavaScript -->
+    <script src="https://www.w3school.com.cn/lib/bs/bootstrap.js"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'review/css/review.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'review/css/style.css' %}">
+    <script>
+        var getDishesUrl = "{% url 'get_dishes_by_search' %}"; // 在这里定义一个全局变量
+        // 定义一个全局集合
+        var includedTags = new Set();
+        var excludedTags = new Set();
+        // 添加元素到集合:add  删除：delete
+		var canteen_list = {{ canteen_names|safe }};
+    </script>
+    <script src="{% static 'review/js/review.js' %}"></script>
+
+<!--    <link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/font-awesome.css" as="style" />-->
+<!--	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/bootstrap-icons.css" as="style" />-->
+<!--	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/unicons.css" as="style" />-->
+<!--	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/font-icons.css" as="style" />-->
+<!--	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/unicons-14.woff2" as="font" type="font/woff2" crossorigin>-->
+<!--	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/unicons-6.woff2" as="font" type="font/woff2" crossorigin>-->
+<!--	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin>-->
+<!--	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+	<link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+
+<!--	<script src="{% static 'review/js/comment.js' %}"></script>-->
+
+	<!-- Font Imports -->
+	<!-- Core Style -->
+<!--	<link rel="stylesheet" href="https://coscdn.htmlpage.cn/canvas-html/style.css">-->
+	<link rel="stylesheet" href="{% static 'review/css/style.css' %}">
+
+	<!-- Font Icons -->
+<!--	<link rel="stylesheet" href="https://coscdn.htmlpage.cn/canvas-html/css/font-icons.css">-->
+	<link rel="stylesheet" href="{% static 'review/css/font-icons.css' %}">
+
+	<!-- Niche Demos -->
+<!--	<link rel="stylesheet" href="https://coscdn.htmlpage.cn/canvas-html/demos/forum/forum.css">-->
+	<link rel="stylesheet" href="{% static 'review/css/forum.css' %}">
+
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="https://coscdn.htmlpage.cn/canvas-html/css/custom.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body class="stretched search-overlay">
+    <!-- Header
+	============================================= -->
+	<header id="header" class="full-header header-size-md" data-mobile-sticky="true">
+		<div id="header-wrap">
+			<div class="container">
+				<div class="header-row">
+
+					<!-- Logo
+					============================================= -->
+					<div id="logo">
+						<a href="demo-forum.html" style="color: #e7944d;">
+							菜品点评系统
+						</a>
+					</div><!-- #logo end -->
+
+					<div class="header-misc ms-0">
+
+						<!-- Top Search
+						============================================= -->
+						<div id="top-search" class="header-misc-icon">
+							<a href="#" id="top-search-trigger"><i class="uil uil-search"></i><i class="bi-x-lg"></i></a>
+						</div><!-- #top-search end -->
+
+						<!-- Top Account
+						============================================= -->
+						<div class="header-misc-icon">
+							<a href="#" id="notifylink" data-bs-toggle="dropdown" data-bs-offset="0,15" aria-haspopup="true" aria-expanded="false" data-offset="12,12"><i class="bi-bell notification-badge"></i></a>
+							<div class="dropdown-menu dropdown-menu-end py-0 m-0 overflow-auto" aria-labelledby="notifylink" style="width: 320px; max-height: 300px">
+								<span class="dropdown-header border-bottom border-f5 fw-medium text-uppercase ls-1">消息提醒</span>
+								<div class="list-group list-group-flush">
+									<a href="#" class="d-flex list-group-item">
+										<img src="https://coscdn.htmlpage.cn/canvas-html/demos/articles/images/authors/2.jpg" width="35" height="35" class="rounded-circle me-3 mt-1" alt="Profile">
+										<div class="media-body">
+											<h5 class="my-0 fw-normal text-muted"><span class="text-dark fw-bold">HTMLPAGE</span> has replied on your post <span class="text-dark fw-bold">专业团队，全程一对一服务，环境优美设施完善，拥有1200平超大海景办公室.</span></h5>
+											<small class="text-smaller">10 mins ago</small>
+										</div>
+									</a>
+									<a href="#" class="d-flex list-group-item">
+										<i class="bi-check-lg badge-icon bg-success text-white me-3 mt-1"></i>
+										<div class="media-body">
+											<h5 class="my-0 fw-normal text-muted"><span class="text-dark fw-bold">HTMLPAGE</span> has marked to your post as solved.</h5>
+											<small class="text-smaller">2 days ago</small>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- Top Account
+						============================================= -->
+						<div class="header-misc-icon profile-image">
+							<a href="#" id="profilelink" data-bs-toggle="dropdown" data-bs-offset="0,15" aria-haspopup="true" aria-expanded="false" data-offset="12,12"><img class="rounded-circle" src="https://coscdn.htmlpage.cn/canvas-html/demos/forum/images/user.png" alt="User"></a>
+							<div class="dropdown-menu dropdown-menu-end py-0 m-0" aria-labelledby="profilelink">
+								<a class="dropdown-item" href="demo-forum-edit.html"><i class="bi-pencil-square me-2"></i>Edit Profile</a>
+								<a class="dropdown-item" href="demo-forum-single.html"><i class="bi-text-left me-2"></i>Your Topics</a>
+								<a class="dropdown-item" href="demo-forum-signout.html"><i class="bi-box-arrow-right me-2"></i>Sign Out</a>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="primary-menu-trigger">
+						<button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
+							<span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
+						</button>
+					</div>
+
+					<!-- Primary Navigation
+					============================================= -->
+					<nav class="primary-menu">
+
+						<ul class="menu-container">
+							<li class="menu-item current"><a class="menu-link" href="demo-forum.html"><div>点评</div></a></li>
+							<li class="menu-item"><a class="menu-link" href="demo-forum-single.html"><div>社区</div></a></li>
+							<li class="menu-item"><a class="menu-link" href="#" data-bs-toggle="modal" data-bs-target="#modal-signin"><div>记录</div></a></li>
+							<li class="menu-item"><a class="menu-link" href="demo-forum-profile.html"><div>设置</div></a></li>
+<!--								<li class="menu-item"><a class="menu-link" href="demo-forum-search-result.html"><div>搜索</div></a></li>-->
+							<li class="menu-item"><a class="menu-link" href="/accounts/log-in"><div>登录/注册</div></a></li>
+						</ul>
+
+					</nav><!-- #primary-menu end -->
+
+					<form class="top-search-form bg-alt dark" action="search.html" method="get">
+						<div class="container row justify-content-center">
+							<div class="col-sm-8">
+								<input type="text" name="q" class="form-control form-control-lg mb-5 border-color" value="" placeholder="输入查询条件 &amp; 点回车.." autocomplete="off">
+								<div class="row col-mb-30">
+									<div class="col-md-6">
+										<div class="widget widget_links">
+											<h4 class="">近期话题</h4>
+											<ul>
+												<li><a href="demo-forum-single.html">专业团队，全程一对一服务，环境优美设施完善，拥有1200平超大海景办公室</a></li>
+												<li><a href="demo-forum-single.html">专业团队，全程一对一服务，环境优美设施完善</a></li>
+												<li><a href="demo-forum-single.html">全新工作室，独具匠心，为您打造梦想的装饰空间。</a></li>
+												<li><a href="demo-forum-single.html">全新工作室，独具匠心，为您打造梦想的装饰空间。</a></li>
+												<li><a href="demo-forum-single.html">全新工作室，独具匠心，为您打造梦想的装饰空间。</a></li>
+											</ul>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="widget widget_links">
+											<h4 class="">常见问题</h4>
+											<ul>
+												<li><a href="demo-forum-single.html">如何安装</a></li>
+												<li><a href="demo-forum-single.html">如何设置本地环境</a></li>
+												<li><a href="demo-forum-single.html">布局和样式设置</a></li>
+												<li><a href="demo-forum-single.html">表单设置</a></li>
+												<li><a href="demo-forum-single.html">左右布局设置</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="header-wrap-clone"></div>
+	</header><!-- #header end -->
+
+
+
+    <div class="container pt-0 pb-0 py-lg-0 mb-0 my-lg-0">
+
+    <div class="d-flex align-self-center flex-column pt-0 pb-2 mb-3" style="border-radius:20px;background-color:var(--div-color);">
+        <div class="display-6 pt-0 pb-0 py-lg-1 my-lg-2" style="font-weight: 800; margin-left: 20px; margin-right: 20px;">菜品浏览</div>
+        <div class="input-group input-group-lg mt-2 mb-4 ms-3 me-6" style="margin-left: 20px; margin-right: 20px; padding-right: 30px;">
+            <input class="form-control rounded-start border-2" type="text" placeholder="请输入菜品名.." id="dish_name">
+            <button class="btn btn-light" type="submit" id="submit-search" style="border:2px solid lightgray !important"><i class="uil uil-search"></i></button>
+        </div>
+        <div class="container" id="search_tag">
+            <div class="row tags">
+				<div class="col-md-1 mb-3 px-4 d-flex align-items-center tag-type">  <!-- 每行最多显示12个按钮，根据屏幕尺寸调节 -->
+                    <span>类别<i class="bi bi-chevron-right" style="color:gray"></i></span>
+                </div>
+                {% for tag in tags_1 %}
+                <div class="col-md-1 mb-3 d-flex align-items-center">
+                    <button type="button" class="tag_button" onclick="toggleInclude(this)" data-id="{{ tag.id }}">{{ tag.name }}</button>
+                </div>
+                {% endfor %}
+            </div>
+			<div class="row tags">
+				<div class="col-md-1 mb-3 px-4 d-flex align-items-center tag-type">
+                    <span>口味<i class="bi bi-chevron-right" style="color:gray"></i></span>
+                </div>
+                {% for tag in tags_2 %}
+                <div class="col-md-1 mb-3 d-flex align-items-center">
+                    <button type="button" class="tag_button" onclick="toggleInclude(this)" data-id="{{ tag.id }}">{{ tag.name }}</button>
+                </div>
+                {% endfor %}
+            </div>
+			<div class="row tags">
+				<div class="col-md-1 mb-3 px-4 d-flex align-items-center tag-type">
+                    <span>风格<i class="bi bi-chevron-right" style="color:gray"></i></span>
+                </div>
+                {% for tag in tags_3 %}
+                <div class="col-md-1 mb-3 d-flex align-items-center">
+                    <button type="button" class="tag_button" onclick="toggleInclude(this)" data-id="{{ tag.id }}">{{ tag.name }}</button>
+                </div>
+                {% endfor %}
+            </div>
+			<div class="row tags">
+				<div class="col-md-1 mb-3 px-4 d-flex align-items-center tag-type">
+                    <span>食材<i class="bi bi-chevron-right" style="color:gray"></i></span>
+                </div>
+                {% for tag in tags_4 %}
+                <div class="col-md-1 mb-3 d-flex align-items-center">
+                    <button type="button" class="tag_button" onclick="toggleInclude(this)" data-id="{{ tag.id }}">{{ tag.name }}</button>
+                </div>
+                {% endfor %}
+            </div>
+			<div class="row tags">
+				<div class="col-md-1 mb-3 px-4 d-flex align-items-center tag-type">
+                    <span>价位<i class="bi bi-chevron-right" style="color:gray"></i></span>
+                </div>
+                {% for tag in tags_5 %}
+                <div class="col-md-1 mb-3 d-flex align-items-center">
+                    <button type="button" class="tag_button" onclick="toggleInclude(this)" data-id="{{ tag.id }}">{{ tag.name }}</button>
+                </div>
+                {% endfor %}
+            </div>
+			<div class="row tags">
+				<div class="col-md-1 mb-3 px-4 d-flex align-items-center tag-type">
+                    <span>其他<i class="bi bi-chevron-right" style="color:gray"></i></span>
+                </div>
+                {% for tag in tags_0 %}
+                <div class="col-md-1 mb-3 d-flex align-items-center">
+                    <button type="button" class="tag_button" onclick="toggleInclude(this)" data-id="{{ tag.id }}">{{ tag.name }}</button>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- 触发模态窗口的按钮 -->
+            <div class="container" id="search_button">
+				<button id="selectTag" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal">添加标签</button>
+			</div>
+        </div>
+    </div>
+
+
+    <!-- 模态窗口结构  添加tag-->
+    <div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+				<form action="add_tag/" id="tagForm" method="post">
+					{% csrf_token %}
+					<div class="modal-header">
+						<h5 class="modal-title" id="tagModalLabel">添加标签</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="text" id="new-tag" name="new-tag" class="form-control" placeholder="输入标签名称" maxlength="15" required>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+						<button type="submit" class="btn btn-primary bg-alt h-bg-alt:hover">确认添加</button>
+					</div>
+				</form>
+            </div>
+        </div>
+    </div>
+
+	<!-- tag重复错误 模态框 -->
+    <div class="modal" id="errorModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">错误</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p id="error-message"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 模态窗口 添加菜品-->
+	<div id="dishModal" class="modal fade" tabindex="-1" aria-labelledby="dishModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<form id="dishForm" action="add_dish/" method="post">
+					{% csrf_token %}
+					<div class="modal-header">
+						<h4 class="modal-title">添加菜品</h4>
+						<button type="button" data-bs-dismiss="modal" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="dishName">菜品名</label><span style="color: red">*</span>
+							<input type="text" id="dishName" name="dishName" maxlength="20" required>
+						</div>
+
+						<div class="form-group">
+							<label for="canteenSelect">选择食堂</label><span style="color: red">*</span>
+							<select id="canteenSelect" name="canteen" required>
+								<!-- JavaScript 将动态填充选项 -->
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="description">菜品描述</label>
+							<textarea id="description" name="description" rows="3" maxlength="200"></textarea>
+						</div>
+
+						<div class="form-group">
+							<label for="description">菜品封面</label><span style="color: red">*</span>
+							<br>
+							<small class="text-muted">仅支持PNG、JPG，最大文件支持2M</small>
+							<div class="form-file">
+								<input type="file" class="form-control" id="file-input" name="file-input" accept=".png, .jpg, .jpeg" required>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+						<button type="submit" class="btn btn-primary bg-alt h-bg-alt:hover">确认添加</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+        <!-- 侧边栏 -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky" style="background-color:var(--div-color);border-radius:20px;">
+					<h4 class="text-center" style="margin: 6px;">餐厅列表</h4>
+                    <ul class="nav flex-column">
+                        {% for restaurant in restaurants %}
+                        <li class="nav-item restaurant-item">
+                            <a class="nav-link restaurant-link" onclick="toggleSelect(this)" href="#" data-id="{{ restaurant.id }}">
+                                {{ restaurant.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <li class="nav-item restaurant-item">
+                            <a class="nav-link restaurant-link" onclick="toggleSelect(this)" href="#" data-id="0">
+                                全部
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- 菜品内容区域 -->
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color:var(--div-color);border-radius:20px;">
+              	<div id="dish-content" class="mt-3">
+                	<div style="font-size:30px;font-weight:bold;">菜品列表</div>
+				  	<div class="sorting-component d-flex"  style="margin-bottom: 10px;">
+						<select id="sort-category">
+							<option value="name">默认排序</option>
+							<option value="rating">按评分排序</option>
+							<option value="comment_count">按评论数排序</option>
+						</select>
+						<select id="sort-order">
+							<option value="desc">降序</option>
+							<option value="asc">升序</option>
+						</select>
+						<button id="openModal" class="btn btn-primary bg-alt h-bg-alt:hover" data-bs-toggle="modal" data-bs-target="#dishModal" style="margin-left:auto">添加菜品</button>
+					</div>
+					<div id="dish-list">
+						<p>请选择一个餐厅查看菜品。</p>
+					</div>
+              	</div>
+            </main>
+        </div>
+    </div>
+	</div>
+
+	<footer id="footer-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="block">
+						<p>Copyright &copy; NIS3368-2024-1-Team6</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="https://coscdn.htmlpage.cn/canvas-html/js/plugins.min.js"></script>
+	<script src="https://coscdn.htmlpage.cn/canvas-html/js/functions.bundle.js"></script>
+
+</body>
+</html>

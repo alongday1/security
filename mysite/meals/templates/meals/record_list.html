@@ -1,0 +1,604 @@
+{% extends 'base.html' %}
+
+{% block title %}Record{% endblock %}
+{% load static %}
+{% load meal_filters %}
+{% csrf_token %}
+{% load custom_tags %}
+
+{% block content %}
+    <!-- <link rel="stylesheet" href="{% static 'meals/styles.css' %}"> -->
+    
+    <div class="ui vertical stripe segment" style="padding-top:50px;padding-bottom:40px;">
+        <div class="ui middle stackable grid wide container"  style="display: flex;">  
+
+            <div class="four wide column" style = "flex: 1; text-align: center;align-items: center;">
+                <div class="ui section" style="padding-left:2em;padding-right:2em;">
+                    <div class="calorie-circle-wrapper" style="position:relative ;">
+                        <canvas id="calorieCircle"></canvas>
+                        <div class="calorie-text" style="position: absolute; top:50%;left:50%;transform: translate(-50%,-50%);">
+                            
+                                {% if remaining_calories >= 0 %}
+                                <span class="ui grey text"><strong>还可以吃</strong></span>
+                                <div class="ui basic segment">
+                                <span class="ui big text"><strong>{{ remaining_calories }} </strong></span>
+                                </div>
+                                {% else %}
+                                <span class="ui grey text"><strong>已经超过</strong></span>
+                                <div class="ui basic segment">
+                                    <span class="ui big red text"><strong>{{ remainingcalories }} </strong></span>
+                                    </div>
+                                {% endif %}
+                           
+                                <span class="ui grey text"><strong>卡</strong></span>
+                        </div>
+                    </div>
+                    <div class="ui basic segment" style="width:100%">
+                        <span class="ui large text"> 今日已摄入: {{ total_intake }} 卡 </span>
+                    </div>
+                    <span class="ui grey large text"><strong>
+                        每日计划: 
+                        <span id="current-calorie-goal">{{ daily_calorie_goal }}</span>   
+                        <input type="number" id="calorie-goal-input" style="display: none; appearance: textfield; width:20%;">
+                        卡
+                    </strong></span>
+                    <button id="set-calorie-goal" class="ui button">设置</button>                    
+                </div>
+                <div class="ui segment" style="width:60% text-align:center;">
+                 <div class="ui form" style="text-align:left;">
+                    <span class="ui left floated large text" style="margin-bottom:0;margin-top:5px;"><strong>卡路里建议 </strong></span>
+                    <div class="ui divider" style="margin-bottom:1rem;margin-top:0;"></div>  
+                    <div class="inline fields" id="gender">
+                        <label for="gender" style="display: flex; align-items: center;">性别:</label>
+                        <div class="field">
+                            <div class="ui radio checkbox ">
+                                <input type="radio" name="fruit" value="female" checked tabindex="0" class="hidden">
+                                <label>女</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="fruit" value="male" tabindex="0" class="hidden">
+                                <label>男</label>
+                            </div>
+                        </div>  
+                    </div>                 
+                        <div class="inline field">
+                            <label>年龄:</label>
+                            <input type="number"class="ui icon input"id="age" name="age" min="1" max="200" style="appearance: textfield;"required >
+                        </div>
+                        <div class="inline field">
+                            <label>体重:</label>
+                            <input type="number" id="weight" name="weight" min="1"  max="999"  style="appearance: textfield;"required >
+                            <label>kg</label>
+                        </div>
+                        <div class="inline field">
+                         <label>身高:</label>
+                          <input type="number" id="height" name="height" min="1" max="999"  style="appearance: textfield;"required >
+                         <label> cm</label>
+                        </div>
+                        <div class="inline field">
+                            <label>Maintain Weight:</label>
+                            <strong><span id="maintainCalories" class="ui large  text">-</span></strong>
+                        </div>
+                        <div class="inline field">
+                           <label>Lose ~0.5 kg p er week:</label>
+                           <strong><span id="loseCalories"class="ui large  text">-</span> </strong>   
+                        </div> 
+                    </div>  
+                </div>     
+            </div>
+                       
+            <div class="eight wide column">
+                <div class="ui one column grid">
+                <div class="ui content" style="width:100% ;">
+                    <div class="ui basic segment" style="display:flex;justify-content:space-around;">
+                        <button id="prev-date" class="medium ui icon brown button" ><i class="angle left icon"></i></button>
+                        <span id="current-date" class="ui big text"><strong>{{ current_date }}</strong></span>
+                        <button id="next-date"class="medium ui icon brown button" ><i class="angle right icon"></i></button>
+                        <input type="text" id="datepicker" style="display:none;">     
+                    </div>
+                    <div class="ui fluid icon input">
+                        <i class="search icon"></i>
+                        <input type="text" id="search-input" placeholder="查看历史用餐记录" oninput="searchMeals()">
+                    </div>  
+                                                    
+                    <div   id="search-results" ></div>
+                   
+                    <div id="pagination" class="ui basic segment" style="display: none;padding-bottom:1%;">
+                        <strong><span id="total-count" class="ui large brown text" ></span></strong>
+                        <span id="total-pages"  class="ui brown text">   共 <span id="page-count">0</span> 页</span>
+                        <button id="prev-button"  class="mini ui icon brown button" >上一页</button>
+                        <input type="number" id="page-input" min="1" style="width:10%;display: none; color:brown;">
+                        <button id="go-button" class="medium ui icon brown button" >跳转</button>
+                        <button id="next-button" class="medium ui icon brown button" >下一页</button>
+                    </div>
+                    {% for meal_type, display_name in meal_types_display %}
+                        <div class="ui fluid card" id="meal-card">
+                            <div class = "ui content">
+                            <div class="ui header">
+                                {{ display_name }}
+                                <div class="right floated">
+                                    <button  id="open-modal" class="ui icon orange button" data-meal-type="{{ meal_type }}"><i class="plus icon"></i></button>
+                                    <button  id="delete-all" class="ui icon yellow button" ><i class="minus icon"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="ui unstackable divided items" >
+                                {% with categorized_meals|get_item:meal_type as meals %}
+                                    {% if meals %}
+                                        {% for meal in meals %}    
+                                                <div class="item">
+                                                       {% if meal.image %}
+                                                       <a class="ui tiny image" >
+                                                         <img style="margin-left:8%;margin-bottom:4%;margin-top:0;" src="{{ meal.image.url }}" >
+                                                        </a>
+                                                        {% endif %}
+                                                        {% if meal.comment %}
+                                                        <div class="content"style="margin-left:1%;min-width:10em;">
+                                                            <div class="header">{{ meal.name }}</div>
+                                                            <div class="description" style="margin-bottom:2%">
+                                                                <p><span class="ui small grey text">{% if meal.comment %} {{ meal.comment }}{% endif %}</span></p>
+                                                            </div>
+                                                        </div>
+                                                         {% else %}
+                                                         <div class="middle aligned content" style="margin-left:1%;min-width:10em;">
+                                                            <a  class="header">{{ meal.name }}</a>
+                                                          </div>
+                                                          {% endif%}
+                                                <div class="extra" style="display: flex;justify-content: flex-end;">
+                                                    <span class="ui medium red text"><strong>{{ meal.calories }}卡</strong></span>
+                                                    <button id="delete-btn" data-meal-id="{{ meal.id }}" style="display: none;height:2em;"class="small ui icon  yellow button" ><i class="minus icon"></i></button>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    {% endfor %}                  
+                </div>
+                </div>
+            </div>
+            
+            <div class="four wide column" style="padding-left: 2%;padding-right: 2%;">
+                <div class="ui section" > 
+                    <span class="ui left floated big text" style="margin-bottom:0;"><strong>记录日历 </span></strong>
+                    <div class="ui divider" style="margin-bottom:1rem;margin-top:0;"></div>
+                   <div id="calendar"></div>
+                </div>
+                <div class="ui hidden divider"></div>
+                <div class="ui section" > 
+                    <h1>上周最爱吃的餐点</h1>
+                    <div class="ui relaxed divided list" > 
+                        {% for meal_type, meals in favorite_meals.items %}
+                            <div class="item">
+                                {% if meal_type == 'breakfast' %}
+                                    早餐:
+                                {% elif meal_type == 'lunch' %}
+                                    午餐:
+                                {% elif meal_type == 'dinner' %}
+                                    晚餐:
+                                {% elif meal_type == 'more' %}
+                                    加餐:
+                                {% endif %}
+                                <ul>
+                                {% if meals %}
+                                    {% for meal in meals %}
+                                        <li>
+                                            <strong>{{ meal.name }}</strong> - 吃了 <strong>{{ meal.count }} </strong>次， 共<strong> {{ meal.calories }}</strong>卡
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>    
+                </div>
+            </div>
+        </div>           
+    
+        <!-- 添加记录的弹窗 -->
+       
+        <div  class="ui tiny modal"id="add-modal" >
+            <div class="header" id="modal-title">添加餐食</div>
+            <div class="content">
+                <form method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <input type="hidden" id="meal-type" name="meal_type">
+                    <div class="ui form">
+                     <div class="field">
+                        <label for="name">食物名称</label>
+                        <input type="text" id="name" name="name" required>                       
+                     </div>
+                     <div class="field">
+                        <label for="calories">卡路里</label>
+                        <input type="number" id="calories" name="calories" value="1" min="1" required>
+                        <p id="calorie-suggestion" style="color: red; font-size: 1.4em;"></p> <!-- 显示卡路里建议 -->
+                     </div>
+                     <div class="field"> 
+                        <label for="comment">评论</label>
+                        <textarea id="comment" name="comment" rows="4" placeholder="请输入评论..."></textarea>
+                     </div>
+                     <div class="field">
+                        <label for="image">图片添加</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                     </div>
+                    </div>
+            </div>
+            <div class="actions">
+                <button id="meal-ad" type="submit" class="ui right yellow labeled icon button">添加<i class="checkmark icon"></i></button>
+                <button id="model-cancel"type="button"  class="ui black right deny button">取消</button>
+            </div>  
+        </div>
+    </form>
+    
+        
+        
+        
+{% endblock %}
+
+{% block script %}
+    
+    <script src="{% static 'meals/script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+    <style>
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            z-index: 1000;
+            font-size: 14px;
+            white-space: nowrap; /* 防止文本换行 */
+            }
+    </style>
+
+    <script>
+        const dailyCalorieGoal = {{ daily_calorie_goal }};
+        const netCalories = Math.min((dailyCalorieGoal - {{ remaining_calories }}), (dailyCalorieGoal + {{ remaining_calories }}));
+        const progressPercentage = Math.max(0, Math.min(1, (netCalories / dailyCalorieGoal))); // 确保在0到1之间
+    
+        let color1, color2; // 定义颜色变量
+        if ({{ remaining_calories }} < 0) { // 检查是否为负数
+            color1 = 'red'; // 摄入部分颜色
+            color2 = '#FF6384'; // 消耗部分颜色
+            pro=1-progressPercentage;
+        } else {
+            color1 = '#FF6384'; // 消耗部分颜色
+            color2 = '#C0C0C0'; // 摄入部分颜色
+            pro=progressPercentage;
+        }
+    
+        const calorieCircle = new Chart(document.getElementById('calorieCircle').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['摄入', '消耗'],
+                datasets: [{
+                    data: [pro, 1 - pro],
+                    backgroundColor: [color1, color2],
+                    hoverBackgroundColor: ['#FF6384', '#36A2AEB']
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 切换删除按钮显示状态
+            const toggleDeleteButtons = document.querySelectorAll('#delete-all');
+            
+            toggleDeleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const mealCard = this.closest('#meal-card');
+                    const deleteButtons = mealCard.querySelectorAll('#delete-btn');
+                    
+                    deleteButtons.forEach(delBtn => {
+                        // 切换显示状态
+                        if (delBtn.style.display === 'none' || delBtn.style.display === '') {
+                            delBtn.style.display = 'inline-block';
+                        } else {
+                            delBtn.style.display = 'none';
+                        }
+                    });
+                });
+            });
+    
+            // 删除记录
+            const deleteButtons = document.querySelectorAll('#delete-btn');
+            
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const mealId = this.getAttribute('data-meal-id');
+                    fetch(`/record/delete_meal/${mealId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => {
+                        // 检查响应的状态
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // 从 DOM 中删除对应的餐记录
+                            this.closest('.meal-item').remove();
+                        } else {
+                            alert('删除失败: ' + data.error);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('.ui.radio.checkbox')
+                     .checkbox();
+
+            // 获取后端传递的当前年和月
+            var initialYear = {{ current_year }};
+            var initialMonth = {{ current_month }} - 1;  // JavaScript 的月份从0开始，因此减去1
+
+            // 计算当前日期
+            var today = moment().format('YYYY-MM-DD'); // 获取今天的日期
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'today'
+                },
+                height: 'auto',
+                border: 'none',
+                defaultDate: new Date(initialYear, initialMonth),  // 使用传递的年和月初始化日历
+                events: [
+                    {% for date_key, color in calendar_data.items %}
+                    {
+                        start: '{{ date_key }}',
+                        color: '{{ color }}'
+                    },
+                    {% endfor %}
+                ],
+                viewRender: function(view, element) {
+                    // 获取当前显示的年份和月份
+                    var currentYear = view.intervalStart.year();
+                    var currentMonth = view.intervalStart.month() + 1;  // JavaScript月份从0开始
+        
+                    // 请求新的日历数据
+                    $.ajax({
+                        url: `/record/get_calendar_data/${currentYear}/${currentMonth}/`,  // 动态请求新月份的数据
+                        type: 'GET',
+                        success: function(data) {
+                            // 清除当前事件
+                            $('#calendar').fullCalendar('removeEvents');
+        
+                            // 添加新事件
+                            for (var date_key in data) {
+                                if (data.hasOwnProperty(date_key)) {
+                                    $('#calendar').fullCalendar('renderEvent', {
+                                        start: date_key,
+                                        color: data[date_key]
+                                    }, true);  // stick = true
+                                }
+                            }
+        
+                           
+        
+                            // 遍历所有日单元格，直接修改背景色
+                            $('.fc-day').each(function() {
+                                var date = $(this).data('date');  // 获取单元格对应的日期
+                                if (data[date]) {
+                                    $(this).css('background-color', data[date]);  // 设置背景色
+                                } else {
+                                    $(this).css('background-color', 'white');  // 重置为默认背景
+                                }
+                            });
+
+                            $('.fc-day').each(function() {
+                                var date = $(this).data('date');
+                                var message = '';
+        
+                                if (data[date] === 'red') {
+                                    message = 'Too much calorie intake';
+                                } else if (data[date] === 'green') {
+                                  
+                                    message = 'Moderate calorie intake';
+                                } else if (data[date] === 'yellow') {
+                                 
+                                    message = 'Little calorie intake';
+                                } else {
+                                    message = 'Not Tracked';
+                                }
+        
+                                if (message) {
+                                    $(this).data('message', message);  // 存储消息
+                                }
+                            });
+        
+                            // 隐藏不是当前月份的日期
+                            $('.fc-day').each(function() {
+                                if ($(this).hasClass('fc-other-month')) {
+                                    $(this).css('border', 'none');
+                                    $(this).css('border-top', '#ddd solid 1px');
+                                }
+                            });
+        
+                            $('.fc-day-top').each(function() {
+                                if ($(this).hasClass('fc-other-month')) {
+                                    $(this).css('color', 'white');
+                                }
+                                $(this).find('.fc-day-number').css('float', 'none'); 
+                                $(this).css('text-align','center')
+                            });
+                        },
+                        error: function() {
+                            console.log("Error fetching calendar data.");
+                        }
+                    });
+        
+                    // 隐藏星期标题行
+                    $('.fc-day-header').hide();
+                },
+                dayClick: function(date) {
+                    var selectedDate  = date.format();  // 获取点击的日期
+
+                 // 判断是否允许跳转
+                 if (!($(this).hasClass('fc-other-month')) ){
+                 if (selectedDate <= today) {
+                        window.location.href = '/record/?date=' + selectedDate ;  // 重定向到记录页面，并附加日期参数
+                    }
+                 }},
+                eventClick: function(event) {
+                    var clickedDate = event.start.format();  // 获取 event 的开始日期
+                    var message = event.color === 'red' ? 'Too much calorie intake' :
+                    event.color === 'green' ? 'Moderate calorie intake' :
+                    event.color === 'yellow' ? 'Little calorie intake' :
+                    event.color === 'white' ? 'Not Tracked' :
+                    '';
+                    if ( message) {
+                        window.location.href = '/record/?date=' + clickedDate;  // 跳转到记录页面，并附加日期参数
+                    }
+                },
+                
+                eventMouseover: function(event, jsEvent, view) {
+                    var message = event.color === 'red' ? 'Too much calorie intake' :
+                                  event.color === 'green' ? 'Moderate calorie intake' :
+                                  event.color === 'yellow' ? 'Little calorie intake' :
+                                  event.color === 'white' ? 'Not Tracked' :
+                                  '';
+                
+                    if (message) {
+                        // 创建 tooltip，并添加相应的类
+                        var tooltipClass = event; // 使用事件的颜色作为类名
+                        var tooltip =  $('<div class="tooltip ' + tooltipClass + '">' + message + '</div>')
+                            .appendTo('body')
+                            .css({
+                                top: jsEvent.pageY + 10,
+                                left: jsEvent.pageX + 10,
+                            })
+                            .fadeIn(200);
+                     if(!(event.color=='white'))
+                     tooltip.css('background-color', event.color);
+                    }
+                },
+                eventMouseout: function(event, jsEvent, view) {
+                    $('.tooltip').remove(); // 隐藏消息
+                }
+            });
+
+            const button = $('.ui.icon.orange.button'); // 使用 jQuery 选择按钮
+            const modal = $('#add-modal'); // 使用 jQuery 选择模态框
+            const modalTitle = $('#modal-title'); // 使用 jQuery 选择模态框标题
+            const mealTypeDisplay = {
+                'breakfast': '早餐',
+                'lunch': '午餐',
+                'dinner': '晚餐',
+                'more': '加餐'
+            };
+
+            // 显示模态框的逻辑
+            button.on('click', function() {
+                const mealType = $(this).data('meal-type'); // 获取按钮上的 meal_type
+                const mealTypeName = mealTypeDisplay[mealType];
+                $('#meal-type').val(mealType); // 设置隐藏字段的值
+                modalTitle.text(`${mealTypeName} — 添加`); // 设置弹窗标题
+                modal.modal('show'); // 显示弹窗
+            });
+        
+            // 关闭模态框的逻辑
+            $('#model-cancel').on('click', function() {
+                modal.modal('hide'); // 关闭弹窗
+            });
+        
+            // 点击模态框外部关闭模态框
+            $(window).on('click', function(event) {
+                if ($(event.target).is(modal)) {
+                    modal.modal('hide'); // 关闭弹窗
+                }
+            });
+        });
+
+        
+
+    </script>
+           
+    <script>
+      document.getElementById('set-calorie-goal').addEventListener('click', function() {
+      const displayElement = document.getElementById('current-calorie-goal');
+      const inputElement = document.getElementById('calorie-goal-input');
+
+      if (inputElement.style.display === 'none') {
+        inputElement.style.display = 'inline-block';
+        displayElement.style.display = 'none';
+        inputElement.value = '';
+        inputElement.focus();
+      } else {
+        const newGoal = parseFloat(inputElement.value);
+
+        // 输入验证
+        if (isNaN(newGoal) || newGoal <= 0) {
+            inputElement.value = '';
+            inputElement.style.display = 'none';
+            displayElement.style.display = 'inline-block';
+            return;
+        }
+
+        // AJAX 请求更新卡路里目标
+        fetch('/record/set-calorie-goal/', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}' 
+            },
+            body: JSON.stringify({ goal: newGoal })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // 更新目标值并隐藏输入框
+                displayElement.innerText = newGoal;
+                inputElement.style.display = 'none';
+                window.location.reload(); 
+            } else {
+                // 处理失败情况（例如，显示错误信息）
+                alert("设置失败，请重试！");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+      }
+     });   
+    </script>
+
+   
+    
+{% endblock %}

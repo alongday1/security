@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}MainPage{% endblock %}
+
+{% block masthead %}{% endblock %}
+
+{% block content %}
+
+	<nav id="navigation">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block">
+						<nav class="navbar navbar-default">
+							<div class="container-fluid">
+								<!-- Brand and toggle get grouped for better mobile display -->
+								<div class="navbar-header">
+									<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+										data-target="#bs-example-navbar-collapse-1">
+										<span class="sr-only">Toggle navigation</span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+									<a class="navbar-brand" href="#">
+										<h1>Main Page</h1>
+									</a>
+									<a class="navbar-brand" href="/review">
+										<h1 style="padding-left:10px; color:#ff530a">Login</h1>
+									</a>
+								</div>
+
+								<!-- Collect the nav links, forms, and other content for toggling -->
+								<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+									<ul class="nav navbar-nav navbar-right" id="top-nav">
+										<li><a href="#hero-area">Home</a></li>
+
+										<li><a href="#blog">Ratings</a></li>
+
+										<li><a href="#canteen statistics">canteen statistics</a></li>
+
+
+									</ul>
+
+								</div><!-- /.navbar-collapse -->
+							</div><!-- /.container-fluid -->
+						</nav>
+					</div>
+				</div><!-- .col-md-12 close -->
+			</div><!-- .row close -->
+		</div><!-- .container close -->
+	</nav><!-- header close -->
+
+	<section id="slider">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+						<div class="title">
+							<h3>Featured <span>Works</span></h3>
+						</div>
+						<div id="owl-example" class="owl-carousel">
+							<div>
+								<a href="/review">
+								<img class="img-responsive" src="{% static 'img/food.png' %}" alt="窗口点评">
+								<h3 style="">窗口点评</h3>
+								</a>
+							</div>
+							<div>
+								<a href="/forum">
+								<img class="img-responsive" src="{% static 'img/social.png' %}" alt="社交空间">
+								<h3>社交空间</h3>
+								</a>
+							</div>
+							<div>
+								<a href="/record">
+								<img class="img-responsive" src="{% static 'img/lifelog.png' %}" alt="生活记录">
+								<h3>生活记录</h3></a>
+							</div>
+							<div>
+								<a href="/user/my_cv">
+								<img class="img-responsive" src="{% static 'img/home.png' %}" alt="">
+								<h3>个人主页</h3></a>
+							</div>
+						</div>
+					</div>
+				</div><!-- .col-md-12 close -->
+			</div><!-- .row close -->
+		</div><!-- .container close -->
+	</section><!-- slider close -->
+
+	<section id="blog">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block">
+						<h1 class="heading"><span>Dishes</span> on <span>Display</span></h1>
+						<ul>
+							{% for dish in dishes  %}
+							<a href="comment/?dish_id={{dish.id}}">
+								<li class="wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="300ms">
+									<div class="blog-img">
+										<img src="{{dish.image_url}}">
+									</div>
+									<div class="content-right">
+										<h3>{{dish.name}}</h3>
+										<p>描述：{{dish.description}}</p>
+										<p>食堂：{{dish.canteen}}</p>
+									</div>
+								</li>
+							</a>
+							{% endfor %}
+						</ul>
+						<a class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
+							href="/review" role="button">More Info</a>
+					</div>
+				</div><!--.col-md-12 close -->
+			</div>--><!-- .row close -->
+		</div><!-- .containe close -->
+	</section><!-- #blog close -->
+
+	<section id="canteen statistics">
+
+<div class="ui vertical stripe segment" style="padding-top:50px;padding-bottom:40px;">
+    <div class="ui middle aligned stackable grid wide container">
+        <div class="sixteen wide mobile eight wided tablet seven wide computer left column">
+            <div class="center aligned row">
+                <!-- <h3 class="ui header center">就餐指数</h3> -->
+                <h3 class="ui header" style="text-align:center;color:#7b6565 ;" id="current-time"></h3>
+                <!-- <div class="ui section divider"></div> -->
+            </div>
+            <div class="row">
+                <div id="canteen_chart" style="width: 100%;height:600px"></div>
+            </div>
+        </div>
+        <div class="sixteen wide mobile eight wided tablet eight wide computer column ">
+            <div class="ui stackable three column grid">
+                {% for group_post in group_posts %}
+                <div class="column">
+                    <a class="ui fluid card" href="{% url 'group_detail' group_post.id %}">
+                        <div class="content">
+                            <div class="right floated meta">at {{ group_post.create_at|time_ago }}</div>
+                            {{ group_post.sponser.username }}
+                        </div>
+                        <div class="content">
+                            <div class="header">{{ group_post.title }}</div>
+                            <div class="description">{{ group_post.address }}<br />{{ group_post.target_time }}</div>
+                        </div>
+                        <div class="extra content">
+                            <i class="user icon"></i>
+                            Joined {{group_post.participants.count}}/{{group_post.max_participants}}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <h4 class="ui horizontal header divider">
+                <a href="{% url 'group_post_list' %}" style="color:#b62f2f">More Group Dining Activities</a>
+            </h4>
+            <div class="row">
+                <div class="ui middle aligned divided items">
+                    {% for post in posts %}
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <a class="header" style="font-weight:400" href="{% url 'post_detail' post.id %}">
+                                <i class="circle icon" style="visibility: visible; color:#b62f2f"></i>
+                                {{post.title}}
+                            </a>
+                            <div class="ui right floated" style="color:#b62f2f;">
+                                <i class="fire alternate icon" style="visibility: visible;color:#b62f2f"></i>
+                                {{post.click}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <a class="ui right floated " style="color:#b62f2f;" href="/forum/1/">MORE POSTS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+		<footer id="footer-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="block">
+						<p>Copyright &copy; NIS3368-2024-1-Team6</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+{% endblock %}
+
+{% block script %}
+<script>
+
+    const chartDom = document.getElementById('canteen_chart');
+    const myChart = echarts.init(chartDom);
+
+    function updateChart() {
+        const canteen_data_update = {{ canteen_data| safe}};
+
+        const names = canteen_data_update.map(item => item.Name);
+        const seats_u = canteen_data_update.map(item => item.Seat_u);
+        const seats_s = canteen_data_update.map(item => item.Seat_s);
+
+        const option = {
+            tooltip: {},
+            legend: {
+                data: ['当前就餐人数', '开放座位数'],
+                bottom: 0,
+            },
+            yAxis: {
+                type: 'category',
+                data: names,
+                axisLabel: {
+                    formatter: function (value) {
+                        return value.toString().replace(/(.{4})/g, '$1\n');
+                    }
+                },
+            },
+            xAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '当前就餐人数',
+                    type: 'bar',
+                    data: seats_u,
+                    itemStyle: {
+                        color: '#b36d61'
+                    }
+                },
+                {
+                    name: '开放座位数',
+                    type: 'bar',
+                    data: seats_s,
+                    itemStyle: {
+                        color: '#e29c45'
+                    }
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+        }
+
+    updateChart();
+
+    setInterval(() => {
+        updateChart();
+    }, 10000);
+
+    function updateTime() {
+        var now = new Date();
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var seconds = now.getSeconds().toString().padStart(2, '0');
+
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        const fullTitle = timeString + '&emsp;' + '非' + '就餐时段';
+        document.getElementById('current-time').innerHTML = fullTitle;
+    }
+
+    setInterval(updateTime, 1000);
+
+    updateTime();
+
+</script>
+{% endblock %}
+	</section>
+
+
+

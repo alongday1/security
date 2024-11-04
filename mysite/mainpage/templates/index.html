@@ -1,0 +1,717 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Restaurant One Page HTML5 Template</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- CSS
+        ================================================ -->
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+	<!-- bootstrap.min css -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!-- Font-awesome.min css -->
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<!-- Responsive Stylesheet -->
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+	<!-- Js -->
+	<script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<script>
+		window.jQuery || document.write('<script src="{% static 'js/vendor/jquery-1.10.2.min.js' %}"><\/script>')
+	</script>
+	<script src="{% static 'js/jquery.nav.js' %}"></script>
+	<script src="{% static 'js/jquery.sticky.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/plugins.js' %}"></script>
+	<script src="{% static 'js/wow.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+
+ 	<script src="{% static 'js/blog.js' %}"></script> <!-- 引入JavaScript脚本 -->
+
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="x-ua-compatible" content="IE=edge">
+	<meta name="author" content="htmlpage">
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/font-awesome.css" as="style" />
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/bootstrap-icons.css" as="style" />
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/unicons.css" as="style" />
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/css/font-icons.css" as="style" />
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/unicons-14.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/unicons-6.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://coscdn.htmlpage.cn/canvas-html/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+	<meta name="description" content="HTMLPAGE.CN是一款专业的在线网页构建器，支持可视化制作网页，所见所得，无需编程经验，拖拽式操作即可完成网页制作，支持跨平台响应式网页制作。">
+
+
+	<link rel="stylesheet" href="{% static 'css/corestyle.css' %}">
+	<!-- Font Icons -->
+	<link rel="stylesheet" href="https://coscdn.htmlpage.cn/canvas-html/css/font-icons.css">
+
+	<!-- Niche Demos -->
+	<link rel="stylesheet" href="https://coscdn.htmlpage.cn/canvas-html/demos/forum/forum.css">
+
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="https://coscdn.htmlpage.cn/canvas-html/css/custom.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static 'js/jQuery/jquery-3.7.1.min.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'js/easymde/easymde.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lightbox/css/lightbox.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/semantic.min.css' %}">
+    <title>Homepage - Fomantic</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/site.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/checkbox.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/container.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/image.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/input.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/divider.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/dropdown.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/segment.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/list.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/modal.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/icon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/sidebar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/search.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/transition.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/progress.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sementic/dist/components/popup.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style type="text/css">
+        .hidden.menu {
+            display: none;
+        }
+
+        .main.hidden.menu {
+            display: block;
+            visibility: visible;
+        }
+
+        .masthead.segment {
+            min-height: 100px;
+            padding: 1em 0em;
+        }
+
+        .masthead .logo.item img {
+            margin-right: 1em;
+        }
+
+        .masthead .ui.menu .ui.button {
+            margin-left: 0.5em;
+        }
+
+        .masthead h1.ui.header {
+            margin-top: 3em;
+            margin-bottom: 0em;
+            font-size: 4em;
+            font-weight: normal;
+        }
+
+        .masthead h2 {
+            font-size: 1.7em;
+            font-weight: normal;
+        }
+
+        .ui.vertical.stripe {
+            padding: 8em 0em;
+        }
+
+        .ui.vertical.stripe h3 {
+            font-size: 2em;
+        }
+
+        .ui.vertical.stripe .button+h3,
+        .ui.vertical.stripe p+h3 {
+            margin-top: 3em;
+        }
+
+        .ui.vertical.stripe .floated.image {
+            clear: both;
+        }
+
+        .ui.vertical.stripe p {
+            font-size: 1.33em;
+        }
+
+        .ui.vertical.stripe .horizontal.divider {
+            margin: 3em 0em;
+        }
+
+        .quote.stripe.segment {
+            padding: 0em;
+        }
+
+        .quote.stripe.segment .grid .column {
+            padding-top: 5em;
+            padding-bottom: 5em;
+        }
+
+        .footer.segment {
+            padding: 5em 0em;
+        }
+
+        .secondary.pointing.menu .toc.item {
+            display: none;
+        }
+        .main.menu {
+            transition: margin-top 0.3s ease;
+        }
+        .overlay .menu {
+            transition: left 0.1s ease;
+        }
+        .image-container {
+            width: auto;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .avatar-group {
+            position: relative;
+            display: block;
+            align-items: center;
+        }
+        .avatar-group img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .avatar-group .more-avatars {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e0e1e2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+        }
+
+        @media only screen and (max-width: 1023px){
+            .hidden_menu{
+                display: none !important;
+            }
+        }
+        @media only screen and (max-width: 700px) {
+            .ui.fixed.menu {
+                display: none !important;
+            }
+
+
+            .secondary.pointing.menu .item,
+            .secondary.pointing.menu .menu {
+                display: none;
+            }
+
+            .secondary.pointing.menu .toc.item {
+                display: block;
+            }
+
+            .masthead.segment {
+                min-height: 100px;
+            }
+
+            .masthead h1.ui.header {
+                font-size: 2em;
+                margin-top: 1.5em;
+            }
+
+            .masthead h2 {
+                margin-top: 0.5em;
+                font-size: 1.5em;
+            }
+        }
+    </style>
+    <script src="{% static 'js/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'js/echarts-wordcloud/echarts-wordcloud.min.js' %}"></script>
+    <script src="{% static 'js/easymde/easymde.js' %}"></script>
+    <script src="{% static 'sementic/dist/semantic.js' %}"></script>
+    <script src="{% static 'lightbox/js/lightbox.min.js' %}"></script>
+
+    <script src="{% static 'sementic/dist/components/visibility.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/sidebar.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/checkbox.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/progress.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/modal.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/search.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/transition.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/popup.min.js' %}"></script>
+    <script src="{% static 'sementic/dist/components/dropdown.js' %}"></script>
+
+
+    <script>
+        $(document)
+            .ready(function () {
+
+                // fix menu when passed
+                $('.masthead')
+                    .visibility({
+                        once: false,
+                        onBottomPassed: function () {
+                            $('.fixed.menu').transition('fade in');
+                        },
+                        onBottomPassedReverse: function () {
+                            $('.fixed.menu').transition('fade out');
+                        }
+                    })
+                    ;
+
+                // create sidebar and attach to menu open
+                $('.ui.sidebar')
+                    .sidebar('attach events', '.toc.item')
+                    ;
+                $('.ui.menu .ui.dropdown').dropdown({
+                        on: 'hover'
+                    });
+                $('.ui.menu a.item')
+                    .on('click', function() {
+                    $(this)
+                        .addClass('active')
+                        .siblings()
+                        .removeClass('active')
+                    ;
+                    })
+                ;
+
+            })
+            ;
+    </script>
+
+
+
+</head>
+
+<body>
+	<!--
+	header-img start 
+	============================== -->
+	<!--
+	<section id="hero-area">
+		<img class="img-responsive" src="/header.jpg" alt="">
+	</section>
+	-->
+	    <div class="ui large top fixed hidden menu" style="background-color:#ffde7d ;">
+        <div class="ui container">
+            <div class="item" style="font-family: 'PermanentMarker', cursive;font-size:26px;padding: 0.5em;">
+                <img class="ui image" src="{% static 'img/icon/baozi.png' %}" alt="icon" style="margin-right: 12px;height: 33px;" />
+                Mealmate
+            </div>
+            <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
+            <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
+            <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
+            <a class="item {% if active_link == '111' %}active{% endif %}" href="#" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Careers</a>
+            <div class="right menu">
+                <div class="item">
+                    <a class="ui basic button">Log in</a>
+                </div>
+                <div class="item">
+                    <a class="ui basic button">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--
+    Header start 
+	============================== -->
+	<nav id="navigation">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block">
+						<nav class="navbar navbar-default">
+							<div class="container-fluid">
+								<!-- Brand and toggle get grouped for better mobile display -->
+								<div class="navbar-header">
+									<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+										data-target="#bs-example-navbar-collapse-1">
+										<span class="sr-only">Toggle navigation</span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+									<a class="navbar-brand" href="#">
+										<h1>Main Page</h1>
+									</a>
+									<a class="navbar-brand" href="/review">
+										<h1 style="padding-left:10px; color:#ff530a">Login</h1>
+									</a>
+								</div>
+
+								<!-- Collect the nav links, forms, and other content for toggling -->
+								<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+									<ul class="nav navbar-nav navbar-right" id="top-nav">
+										<li><a href="#hero-area">Home</a></li>
+
+										<li><a href="#blog">Ratings</a></li>
+
+										<li><a href="#canteen statistics">canteen statistics</a></li>
+
+
+									</ul>
+
+								</div><!-- /.navbar-collapse -->
+							</div><!-- /.container-fluid -->
+						</nav>
+					</div>
+				</div><!-- .col-md-12 close -->
+			</div><!-- .row close -->
+		</div><!-- .container close -->
+	</nav><!-- header close -->
+
+
+            <div class="ui vertical masthead center aligned yellow segment" style="color:#ffde7d ;">
+
+             <div class="ui container">
+                <div class="ui large secondary pointing yellow menu" style="color:#ffde7d ;">
+                    <div class="left item" style="align-items:center ;text-align: center;align-content: center;align-self: center;">
+                        <a class="toc item">
+                            <i class="sidebar icon"></i>
+                        </a>
+                        <div class="item" style="font-family: 'PermanentMarker', cursive;font-size:26px;padding: 0.5em;">
+                            <img class="ui image" src="{% static 'img/icon/baozi.png' %}" alt="icon" style="margin-right: 12px;height: 30px;" />
+                            Mealmate
+                        </div>
+                        <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
+                        <!-- <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a> -->
+                        <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}color:#ffb61e;{% endif %}">
+                            Forum
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <a class="item" href="{% url 'forum_home' %}">Summary</a>
+                                <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
+                                <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
+                            </div>
+                        </div>
+                        <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
+                        <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
+                    </div>
+                    <div class="right item">
+                        <!-- <div class="item">
+                            <div class="ui action left icon input">
+                              <i class="search icon"></i>
+                              <input type="text" placeholder="Search">
+                              <button class="ui button">Submit</button>
+                            </div>
+                          </div> -->
+                        <div class="ui item " >
+                            <a class="ui right corner small red empty circular label {% if message_reminder_visible %}visible{% else %}hidden{% endif %}" id="messege_reminder"></a>
+                            <a href="{% if is_authenticated %}{% url 'message_forum' %}{% else %}{% endif %}" class="content {% if is_authenticated %}{% else %}login-toast{% endif %}">
+                                <i class="bell icon brown"></i>
+                            </a>
+                        </div>
+                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Log in</a>
+                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+	<!--
+    Slider start
+    ============================== -->
+	<section id="slider">
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+						<div class="row">
+							<div class="col-md-3">
+								<a href="/review">
+								<img class="img-responsive" src="{% static 'img/food.png' %}" style="max-height: 300px; max-width: 300px" alt="窗口点评">
+								<div style="text-align: center; color: black;font-size: 20px;  font-weight: 600;">窗口点评</div>
+								</a>
+							</div>
+							<div class="col-md-3">
+								<a href="/forum">
+								<img class="img-responsive" src="{% static 'img/social.png' %}" style="max-height: 300px; max-width: 300px" alt="社交空间">
+								<div style="text-align: center; color: black;font-size: 20px;  font-weight: 600;">社交空间</div>
+								</a>
+							</div>
+							<div class="col-md-3">
+								<a href="/record">
+								<img class="img-responsive" src="{% static 'img/lifelog.png' %}" style="max-height: 300px; max-width: 300px" alt="生活记录">
+								<div style="text-align: center; color: black;font-size: 20px;  font-weight: 600;">生活记录</div></a>
+							</div>
+							<div class="col-md-3">
+								<a href="/user/my_cv">
+								<img class="img-responsive" src="{% static 'img/home.png' %}" style="max-height: 300px; max-width: 300px" alt="">
+								<div style="text-align: center; color: black;font-size: 20px;  font-weight: 600;">个人主页</div></a>
+							</div>
+						</div>
+					</div>
+				</div><!-- .col-md-12 close -->
+			</div><!-- .row close -->
+		</div><!-- .container close -->
+	</section><!-- slider close -->
+
+
+	<!--
+    blog start
+    ============================ -->
+	<section id="blog">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="block">
+						<h1 class="heading"><span>Dishes</span> on <span>Display</span></h1>
+						<ul>
+							{% for dish in dishes  %}
+							<a href="review/comments/?dish_id={{dish.id}}">
+								<li class="wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="300ms">
+									<div class="blog-img">
+										<img style="height:300px; width:360px" src="{{dish.main_image.image.url}}">
+									</div>
+									<div class="content-right">
+										<h3>{{dish.name}}</h3>
+										<p style="height: 100px; overflow: hidden">描述：{{dish.description}}</p>
+										<p>食堂：{{dish.canteen}}</p>
+									</div>
+								</li>
+							</a>
+							{% endfor %}
+						</ul>
+						<a class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
+							href="/review" role="button">More Info</a>
+					</div>
+				</div><!--.col-md-12 close -->
+			</div>--><!-- .row close -->
+		</div><!-- .containe close -->
+	</section><!-- #blog close -->
+
+	<!--
+    social  start
+    ============================= -->
+
+	<section id="canteen statistics">
+		{% block content %}
+{% load custom_filters %}
+<div class="ui vertical stripe segment" style="padding-top:50px;padding-bottom:40px;">
+    <div class="ui middle aligned stackable grid wide container">
+        <div class="sixteen wide mobile eight wided tablet seven wide computer left column">
+            <div class="center aligned row">
+                <!-- <h3 class="ui header center">就餐指数</h3> -->
+                <h3 class="ui header" style="text-align:center;color:#7b6565 ;" id="current-time"></h3>
+                <!-- <div class="ui section divider"></div> -->
+            </div>
+            <div class="row">
+                <div id="canteen_chart" style="width: 100%;height:600px"></div>
+            </div>
+        </div>
+        <div class="sixteen wide mobile eight wided tablet eight wide computer column ">
+            <div class="ui stackable three column grid">
+                {% for group_post in group_posts %}
+                <div class="column">
+                    <a class="ui fluid card" href="{% url 'group_detail' group_post.id %}">
+                        <div class="content">
+                            <div class="right floated meta">at {{ group_post.create_at|time_ago }}</div>
+                            {{ group_post.sponser.username }}
+                        </div>
+                        <div class="content">
+                            <div class="header">{{ group_post.title }}</div>
+                            <div class="description">{{ group_post.address }}<br />{{ group_post.target_time }}</div>
+                        </div>
+                        <div class="extra content">
+                            <i class="user icon"></i>
+                            Joined {{group_post.participants.count}}/{{group_post.max_participants}}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <h4 class="ui horizontal header divider">
+                <a href="{% url 'group_post_list' %}" style="color:#b62f2f">More Group Dining Activities</a>
+            </h4>
+            <div class="row">
+                <div class="ui middle aligned divided items">
+                    {% for post in posts %}
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <a class="header" style="font-weight:400" href="{% url 'post_detail' post.id %}">
+                                <i class="circle icon" style="visibility: visible; color:#b62f2f"></i>
+                                {{post.title}}
+                            </a>
+                            <div class="ui right floated" style="color:#b62f2f;">
+                                <i class="fire alternate icon" style="visibility: visible;color:#b62f2f"></i>
+                                {{post.click}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <a class="ui right floated " style="color:#b62f2f;" href="/forum/1/">MORE POSTS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+    const chartDom = document.getElementById('canteen_chart');
+    const myChart = echarts.init(chartDom);
+
+    function updateChart() {
+        const canteen_data_update = {{ canteen_data| safe}};
+
+        const names = canteen_data_update.map(item => item.Name);
+        const seats_u = canteen_data_update.map(item => item.Seat_u);
+        const seats_s = canteen_data_update.map(item => item.Seat_s);
+
+        const option = {
+            tooltip: {},
+            legend: {
+                data: ['当前就餐人数', '开放座位数'],
+                bottom: 0,
+            },
+            yAxis: {
+                type: 'category',
+                data: names,
+                axisLabel: {
+                    formatter: function (value) {
+                        return value.toString().replace(/(.{4})/g, '$1\n');
+                    }
+                },
+            },
+            xAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '当前就餐人数',
+                    type: 'bar',
+                    data: seats_u,
+                    itemStyle: {
+                        color: '#b36d61'
+                    }
+                },
+                {
+                    name: '开放座位数',
+                    type: 'bar',
+                    data: seats_s,
+                    itemStyle: {
+                        color: '#e29c45'
+                    }
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+        }
+
+    updateChart();
+
+    setInterval(() => {
+        updateChart();
+    }, 10000);
+
+    function updateTime() {
+        var now = new Date();
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var seconds = now.getSeconds().toString().padStart(2, '0');
+
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        const fullTitle = timeString + '&emsp;' + '非' + '就餐时段';
+        document.getElementById('current-time').innerHTML = fullTitle;
+    }
+
+    setInterval(updateTime, 1000);
+
+    updateTime();
+
+</script>
+{% endblock %}
+	</section>
+
+
+    <div class="pusher">
+
+
+
+
+        <div class="ui vertical footer segment" style="border-top: 5px;background-color:#ffde7d">
+            <div class="ui center aligned container">
+                <div class="ui stackable divided grid">
+                  <div class="three wide column">
+                    <h4 class="ui header">Group 1</h4>
+                    <div class="ui link list">
+                      <a href="#" class="item">Link One</a>
+                      <a href="#" class="item">Link Two</a>
+                      <a href="#" class="item">Link Three</a>
+                      <a href="#" class="item">Link Four</a>
+                    </div>
+                  </div>
+                  <div class="three wide column">
+                    <h4 class="ui header">Group 2</h4>
+                    <div class="ui link list">
+                      <a href="#" class="item">Link One</a>
+                      <a href="#" class="item">Link Two</a>
+                      <a href="#" class="item">Link Three</a>
+                      <a href="#" class="item">Link Four</a>
+                    </div>
+                  </div>
+                  <div class="three wide column">
+                    <h4 class="ui header">Group 3</h4>
+                    <div class="ui link list">
+                      <a href="#" class="item">Link One</a>
+                      <a href="#" class="item">Link Two</a>
+                      <a href="#" class="item">Link Three</a>
+                      <a href="#" class="item">Link Four</a>
+                    </div>
+                  </div>
+                  <div class="seven wide column">
+                    <h4 class="ui header">Footer Header</h4>
+                    <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                  </div>
+                </div>
+                <div class="ui section divider" style="color:#ffde7d;"></div>
+                <img src="{% static 'img/avatar/cat1.png' %}" class="ui centered mini image">
+                <div class="ui horizontal small divided link list">
+                  <a class="item" href="#">Site Map</a>
+                  <a class="item" href="#">Contact Us</a>
+                  <a class="item" href="#">Terms and Conditions</a>
+                  <a class="item" href="#">Privacy Policy</a>
+                </div>
+              </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

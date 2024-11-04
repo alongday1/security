@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum_post{% endblock %}
+
+{% block masthead %}{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load custom_filters %}
+{% load markdown_extras %}
+<div class="ui vertical stripe segment" style="padding-top:50px;padding-bottom:40px;">
+    <div class="ui middle stackable grid wide container">
+        <div class="four wide column">
+            <div class="ui left text vertical secondary main hidden_menu menu">
+                <div class="item">
+                    <div class="ui scrolling search">
+                        <div class="ui icon input">
+                            <input class="prompt" type="text" placeholder="Search posts...">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="results"></div>
+                    </div>
+                </div>
+                <div class="ui hidden divider"></div>
+                {% for forum in forums %}
+                <a class="item " href="{% url 'forum_post' forum.id %}">
+                    {% if forum.icon %}
+                    <img class="ui avatar image" src="{{ forum.icon.url }}" alt="{{ forum.name }}"
+                        style="margin-right: 12px;" />
+                    {% else %}
+                    {% endif %}
+                    <span>{{ forum.name }}</span>
+                    <a />
+                    {% endfor %}
+                    <div class="ui inverted fitted divider"></div>
+                    <a class="item active" href="{% url 'group_post_list' %}">
+                        <i class="glass cheers large icon" style="margin-right: 12px;"></i>
+                        <span>
+                        食伴聚会
+                        </span>
+                    </a>
+            </div>
+        </div>
+        <div class="eight wide column">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="ui success message">
+                        <i class="close icon"></i>
+                        <div class="header">{{ message }}</div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if group_posts.paginator.count == 0 %}
+                <div class="ui center aligned brown message transition">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        当前没有拼团帖哦
+                    </div>
+                </div>
+            {% else %}
+            <div class="ui cards">
+                {% for group_post in group_posts %}
+                <a class="ui card" style="width:95%;height:auto" href="{% url 'group_detail' group_post.id %}">
+                    <div class="content">
+                        <div class="right floated meta">{{ group_post.create_at|time_ago }}</div>
+                        <div class="header">{{ group_post.title }}</div>
+                        <div class="meta">{{ group_post.sponser.username }}</div>
+                        <div class="description">
+                            <i class="clock outline icon"></i>
+                            {{ group_post.target_time }}
+                            &emsp;
+                            <i class="location arrow icon"></i>
+                            {{ group_post.address }}
+                            &emsp;
+                            <i class="user friends icon"></i>
+                            {{ group_post.participants.count }}/{{ group_post.max_participants }}
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <!-- extra content -->
+                        <div class="avatar-group right aligned">
+                            {% for participant in group_post.participants.all|slice:":4" %}
+                                {% if participant.profile.avatar %}
+                                    <img src="{{ participant.profile.avatar.url }}" alt="{{ participant.username }}" class="ui circular avatar image">
+                                {% else %}
+                                    <img src="{% static 'img/avatar/' %}{{ ''|random_avatar }}" alt="默认头像" class="ui circular avatar image">
+                                {% endif %}
+                            {% endfor %}
+
+                            <!-- 如果超过4个参与者，显示 +x -->
+                            {% if group_post.participants.count > 4 %}
+                                <div class="more-avatars">
+                                    +{{ group_post.participants.count|add:"-4" }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="ui section divider "></div>
+            <!-- <div class="ui basic segment"> -->
+                <div class="ui centered pagination menu">
+                    {% if group_posts.has_previous %}
+                    <a class="item" href="?page=1">First</a>
+                    <a class="item" href="?page={{ group_posts.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    <!-- <span class="item">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span> -->
+
+                    {% for num in group_posts.paginator.page_range %}
+                        {% if posts.number == num %}
+                            <a class="item active" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > group_posts.number|add:'-3' and num < group_posts.number|add:'3' %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == 1 or num == group_posts.paginator.num_pages %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == group_posts.number|add:'-4' or num == group_posts.number|add:'4' %}
+                            <span class="item">...</span>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if group_posts.has_next %}
+                    <a class="item" href="?page={{ group_posts.next_page_number }}">Next</a>
+                    <a class="item" href="?page={{ group_posts.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
+            <!-- </div> -->
+        </div>
+        <div class="four wide column">
+            <div class="ui basic center aligned stackable segment">
+                <div class="ui content">
+                <button class="ui basic brown button" style="width: 100% ;" onclick="window.location.href= '{% url 'post_create' %}'">
+                    <i class="plus icon"></i>
+                    ADD NEW POST
+                </button>
+                </div>
+            </div>
+            <div class="ui segment" style="height: 300px;width: 100%">
+                <div id="wordcloud" style="height: 100%;width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  })
+;
+document.querySelectorAll('.item').forEach(function(item) {
+    item.addEventListener('click', function() {
+        document.querySelectorAll('.item').forEach(function(i) {
+            i.classList.remove('active');
+        });
+        this.classList.add('active');
+    });
+});
+$(document)
+    .ready(function() {
+        $('.main.menu').visibility({
+            type: 'fixed',
+            
+        });
+        $(window).scroll(function() {
+                if ($(this).scrollTop() > 130) {
+                    $('.main.menu').css('margin-top', '80px');
+                } else {
+                    $('.main.menu').css('margin-top', '0px');
+                }
+            });
+        $('#inline_calendar')
+             .calendar(
+                {
+                    selectAdjacentDays: true,
+                    type: 'date',
+                }
+             )
+        ;
+
+})
+;
+
+const apiUrl = "{% url 'search-post' %}?q={query}";
+
+$(document).ready(function() {
+$('.ui.search')
+  .search({
+    preserveHTML : false,
+    type: 'category',
+    minCharacters : 1,
+    showNoResults:true,
+    apiSettings:{
+        url:apiUrl,
+        onResponse: function(apiResponse) {
+            var response = {
+                results: {}
+            };
+            
+            var groupCategory = '食伴聚会';
+            
+            $.each(apiResponse.group_posts, function(index, item) {
+                if (response.results[groupCategory] === undefined){
+                    response.results[groupCategory] = {
+                        name: groupCategory,
+                        results: []
+                    };
+                }
+                response.results[groupCategory].results.push({
+                    title: item.title,
+                    description: item.sponser_name,
+                    url: "/forum/group_post/"+item.id,
+                });
+            });
+
+            $.each(apiResponse.posts, function(index, item) {
+                var forumName = item.forum_name;
+                
+                if (response.results[forumName] === undefined) {
+                    response.results[forumName] = {
+                        name: forumName,
+                        results: []
+                    };
+                }
+                
+                response.results[forumName].results.push({
+                    title: item.title,
+                    description: item.author_name,
+                    url: "/forum/post/"+item.id,
+                });
+            });
+            return response;
+        }
+
+    },
+  })
+;
+})
+;
+
+var wordcloud_chart=document.getElementById('wordcloud');
+var chart1 = echarts.init(wordcloud_chart);
+
+const tag_count ={{tag_count|safe}};
+
+const blackcolor = ['#155263', '#6c5b7c', '#c06c84', '#ff6f3c'];
+const redcolor = ['#ff6464', '#ff8264', '#ffaa64','#fff5a5', ];
+    
+const iterate = (arr, i, j, l) => {
+    const fontSizeBase = l === 0 ? 60 : 40;
+    for (let k = i; k <= j; k++) {
+        arr[k].textStyle = {
+            color: k % 2 === 0 ? (l === 0 ? redcolor[l] : redcolor[l]) : blackcolor[l],
+            fontSize: l === 0 ? (k === 0 ? fontSizeBase : fontSizeBase - k) : undefined
+        };
+    }
+};
+
+const tag_count_data = (tag_count) => {
+    const len = tag_count.length;
+    if (len <= 8) {
+        tag_count.forEach((tag, k) => {
+            tag.textStyle = {
+                color: k % 2 === 0 ? redcolor[Math.floor(k / 2)] : blackcolor[Math.floor(k / 2)]
+            };
+        });
+    } else {
+        const mid = Math.floor(len / 2);
+        iterate(tag_count, 0, mid - 1, 0);
+        iterate(tag_count, mid, Math.floor(len / 2 + (len % 2)), 1);
+        iterate(tag_count, Math.floor(len / 2 + (len % 2)), len - 1, 2);
+    }
+    return tag_count; // 返回处理后的 tag_count
+};
+
+console.log(tag_count_data);
+
+function updateChart1(){
+    var option = {
+        tooltip: {},
+        series: [ {
+            type: 'wordCloud',
+            gridSize: 6,
+            sizeRange: [10, 30],
+            rotationRange: [-45, 45],
+            shape: 'square',
+            width: "100%",
+            height: "100%",
+            keepAspect: true,
+            drawOutOfBound: false,
+            shrinkToFit: false,
+            layoutAnimation: true,
+            textStyle: {
+                color: function () {
+                    return 'rgb(' + [
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160)
+                    ].join(',') + ')';
+                }
+            },
+            emphasis: {
+                focus: 'self',
+                textStyle: {
+                    shadowBlur: 10,
+                    shadowColor: '#333',
+                }
+                
+            },
+            data: tag_count_data(tag_count)
+        } ]
+    };
+    chart1.setOption(option);
+    window.onresize = chart.resize;
+
+}
+
+updateChart1();
+
+window.addEventListener('resize', updateChart1);
+
+</script>
+{% endblock %}

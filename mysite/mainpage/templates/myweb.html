@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My resume</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+<!-- 页面包含表格、列表和图片元素；-->
+<!-- <link>标签引入外部式样表（单独的.css文件） -->
+<!-- 使用外部JavaScript脚本（.js文件）。 -->
+
+<script src="{% static 'js/myScript.js' %}"></script>
+
+<img src="{% static 'img/证件照.jpg' %}" width="190.5" height="224"/>
+<h1>刘明澄 Mingcheng Liu (CC)</h1>
+
+<p>手机Phone Number：13701637646</p>
+<p>邮箱E-mail：liumingcheng54@sjtu.edu.cn</p>
+
+
+<h2 id="教育背景title">教育背景：</h2>
+<p id="教育背景">上海交通大学 电子信息与电气工程学院 信息安全专业 大三年级在读</p>
+
+<hr/>
+
+<h2>兴趣爱好Hobbies:</h2>
+<ul>
+<li>阅读Reading</li>
+    <ul>
+        <li>经典小说Classic novels</li>
+        <li>侦探小说Detective novels</li>
+        <li>科幻Sci-fi</li>
+        <li>奇幻Fantasy</li>
+    </ul>
+<li>骑车Cycling</li>
+<li>数独Soduku</li>
+</ul>
+<hr/>
+
+<h2 id="课业经历标题">课业经历：</h2>
+<p id="课业经历">我始终认真对待各门课程，核心课程绩点4.05/4.3，学积分、绩点排名年级第一。数学基础类课程和计算机相关课程中基本取得95+，其余专业课总体保持在90+。</p>
+<hr/>
+
+<h2>计算机相关课程computer-related courses：</h2>
+<table >
+<tr>
+  <th>课程名Course</th>
+  <th>期末成绩Final Test Score</th>
+  <th>总成绩Overall grade</th>
+</tr>
+<tr>
+  <td>程序设计思想与方法（C++）</td>
+  <td>93</td>
+  <td>96.5</td>
+</tr>
+<tr>
+  <td>数据结构Data Structure</td>
+  <td>93</td>
+  <td>95</td>
+</tr>
+<tr>
+  <td>数字电子技术 Digital Fundamentals</td>
+  <td>96</td>
+  <td>97</td>
+</tr>
+<tr>
+  <td>计算机编程实践Computer Programming Practice</td>
+  <td>Project：97</td>
+  <td>97.8</td>
+</tr>
+<tr>
+  <td>计算机组成与系统结构Computer Architecture and System Structure</td>
+  <td>92</td>
+  <td>93</td>
+</tr>
+<tr>
+  <td>编译原理Compilation Principle</td>
+  <td>99</td>
+  <td>98</td>
+</tr>
+</table>
+<hr/>
+
+<h2>外语水平English Proficiency：</h2>
+<table>
+<tr>
+    <td>CET6</td>
+    <td>L：229</td>
+    <td>R：249</td>
+    <td>Writing&Translation：179</td>
+</tr>
+<tr>
+    <td>GRE</td>
+    <td>V：165</td>
+    <td>Q：170</td>
+    <td>Analytical Writing ：4.0</td>
+</tr>
+<tr>
+    <td>TOEFL</td>
+    <td>L：30</td>
+    <td>R：30</td>
+    <td>Speaking&Writing：23+29</td>
+</tr>
+</table>
+<hr/>
+
+<button class="button" type="button" onclick="retranslation()" id="EtoC">中文</button>
+<button class="button" type="button" onclick="translation()" id="CtoE">English</button>
+<hr/>
+
+
+</body>
+</html>

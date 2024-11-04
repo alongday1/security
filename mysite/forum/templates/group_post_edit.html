@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum_add{% endblock %}
+
+{% block masthead %}{% endblock %}
+
+{% block content %}
+<div class="ui middle stackable center grid wide container" style="margin-top:50px;">
+    <div class="sixteen wide mobile two wided tablet two wide computer column "></div>
+    <div class="sixteen wide mobile twelve wided tablet twelve wide computer column ">
+        <div class="ui segment"
+            style="margin-bottom:40px;padding-top:60px;padding-bottom:60px;padding-left: 50px;padding-right: 50px;">
+            <form class="ui large form error" id="post-form" method="POST" enctype="multipart/form-data" action="{% url 'post_create' %}">
+                {% csrf_token %}
+                <h4 class="ui horizontal massive divider header">Post Information</h4>
+                <div class="ui divider hidden"></div>
+                <!--  -->
+                <div class="field">
+                    <label>Author: &nbsp; {{ username }}</label>
+                </div>
+                <!--  -->
+                <div class="grouped_activities">
+                    <div class="ui divider"></div>
+                    <!-- title -->
+                    <div class="required field">
+                        <label>Title</label>
+                        <div class="fields">
+                          <div class="sixteen wide field">
+                            <input type="text" name="title1" placeholder="Please input title for post..." value="{{ title }}">
+                          </div>
+                        </div>
+                    </div>
+                    <!-- endtitle -->
+                    <!-- address -->
+                    <div class="required field">
+                        <label>Destination</label>
+                        <div class="fields">
+                          <div class="sixteen wide field">
+                            <input type="text" name="address" placeholder="Please input your destinstion" value="{{ address }}">
+                          </div>
+                        </div>
+                    </div>
+                    <!-- end address -->
+                    <!-- schedule -->
+                    <div class="required field">
+                        <label>Schedule Time</label>
+                        <div class="ui calendar">
+                          <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Pick up datetime for schedule." name="target_time" value="{{ target_time }}">
+                          </div>
+                        </div>
+                    </div>
+                    <!-- end schedule -->
+                    <!-- min and max -->
+                    <div class="two fields">
+                        <div class="required field">
+                            <label>Minimum Turnout</label>
+                            <div class="fields">
+                              <div class="sixteen wide field">
+                                <input type="number" name="min" placeholder="Minimum number for participants" value="{{ min }}">
+                              </div>
+                            </div>
+                        </div>
+                        <div class="required field">
+                            <label>Maximum Turnout</label>
+                            <div class="fields">
+                              <div class="sixteen wide field">
+                                <input type="number" name="max" placeholder="Maximum number for participants" value="{{ max }}">
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end min/max -->
+                    <!-- content -->
+                    <div class="field">
+                        <label>Content</label>
+                        <textarea id="markdown-editor1" name="content1">{{ content }}</textarea>
+                    </div>
+                    <!-- end content -->
+                    <div class="ui divider hidden"></div>
+                    <!-- error message -->
+                    <div class="ui error message hidden">
+                        <div class="header">Submission Failed</div>
+                        <p>{{ error_message }}</p>
+                    </div>
+                    <!-- end error_message -->
+                    <div style="text-align:center ;">
+                        <div class="ui divider hidden "></div>
+                        <button class="ui basic button large brown" onclick="window.location.href='{% url 'group_post_list' %}'">Back to Forum</button>
+                        <button class="ui basic brown large button" type= "submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>  
+    </div>
+    <div class="sixteen wide mobile two wided tablet two wide computer column"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+$(document)
+    .ready(function() {
+    $('.ui.radio.checkbox')
+        .checkbox()
+    ;
+    $('input[name="type"]').on('change', function() {
+        showContent(this);
+    });
+    $('.selection.dropdown')
+        .dropdown()
+    ;
+    $('#multi-select')
+    .dropdown({
+        keepSearchTerm: true,
+        preserveHTML:false,
+        allowAdditions: true,
+        ignoreSearchCase:false,    
+    });
+    $('.ui.calendar')
+    .calendar()
+    ;
+    $('#post-form').submit(function (event) {
+        event.preventDefault();  
+        
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.status === 'success') {
+                    window.location.href = "{% url 'group_post_list' %}";
+                } else {
+                    $('.ui.error.message').removeClass('hidden').addClass('visible').find('p').text(response.message);
+                    console.log("111");
+                }
+            },
+            error: function () {
+                $('.ui.error.message').removeClass('hidden').addClass('visible').find('p').text('There was an error with the submission.');
+                console.log("222");
+            }
+        });
+    });
+
+})
+;
+
+document.addEventListener("DOMContentLoaded", function() {
+        const easyMDE1 = new EasyMDE({ 
+            element: document.getElementById("markdown-editor1"),
+            spellChecker: false
+        });
+    });
+
+</script>
+{% endblock %}

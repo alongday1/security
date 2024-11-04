@@ -1,0 +1,266 @@
+:root {
+  --main-color: #3498db;  /* 定义一个主颜色 */
+  --secondary-color: #2ecc71;  /* 定义一个次要颜色 */
+  --text-color: #333;  /* 定义文本颜色 */
+  --div-color: #f7f3f0;
+}
+
+#search_input {
+    display: flex;
+}
+/*
+#tags {
+    margin: 20px;
+    border-radius: 10px;
+}*/
+
+.tag-type {
+    font-size: 18px;
+}
+
+.tag_button {
+    width: 80px;
+    height: 35px;
+    background-color: rgba(246,189,101,0.7);
+    color: dark;
+    border: none;
+    border-radius: 10px;
+}
+
+.tag_button.included {
+    background-color: rgba(225,106,49,0.7);
+}
+
+.tag_button.excluded {
+    background-color: rgba(73,73,73,0.7);
+}
+
+.tag_button:hover{
+    filter: brightness(1.1); /* 将亮度调高 20% */
+}
+
+.restaurant-item {
+height: 50px;
+background-color: var(--div-color);
+}
+
+.restaurant-item:active {
+background-color: #ffdebc;
+}
+
+.restaurant-link {
+color: #a6daed;
+}
+
+.restaurant-link:focus {
+color: #ffdebc;
+}
+
+
+.dish-container {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid orange;
+    border-bottom: none;
+    padding: 10px;
+    margin-bottom: 0px;
+    background-color: #fdeee2;
+}
+
+.dish-container:hover {
+    opacity: 0.7;
+}
+
+.dish-container img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    float: left;
+    margin-right: 10px;
+}
+
+.dish-container .main_show {
+    overflow: hidden;
+}
+
+.dish-container h3 {
+
+}
+
+.dish-container .desc_show {
+
+}
+
+.dish-container .rating_show {
+    color: #ff7e52;
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.dish-container .count_show {
+    color: gray;
+    font-size: 15px;
+}
+
+.dish-container .tags_show {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    align-items: center; /* 垂直居中 */
+
+}
+
+.tag_button_sm {
+    border: none;
+    border-radius: 20px;
+    width: 50px;
+    height: 30px;
+    background-color: orange;
+    color: white;
+}
+
+.tag_button_sm.disabled {
+    pointer-events: none;  /* 禁用点击 */
+    opacity: 0.5;  /* 设置按钮为半透明 */
+    cursor: not-allowed;  /* 更改鼠标光标样式 */
+}
+
+.tag_button_sm.disabled:hover {
+    background-color: initial;  /* 取消悬浮时的背景色变化 */
+    color: initial;  /* 取消悬浮时的文本色变化 */
+}
+
+.tag_button_lg {
+    border: none;
+    border-radius: 20px;
+    width: 100px;
+    height: 30px;
+    background-color: orange;
+    color: white;
+}
+
+.tag_button_lg.disabled {
+    pointer-events: none;  /* 禁用点击 */
+    opacity: 0.5;  /* 设置按钮为半透明 */
+    cursor: not-allowed;  /* 更改鼠标光标样式 */
+}
+
+.tag_button_lg.disabled:hover {
+    background-color: initial;  /* 取消悬浮时的背景色变化 */
+    color: initial;  /* 取消悬浮时的文本色变化 */
+}
+
+#selectTag {
+background-color: #ff8255;
+border: none;
+}
+
+#selectTag:hover {
+background-color: #ff4a08;
+}
+
+#search_button {
+text-align: right;
+padding-bottom:12px;
+}
+
+
+#footer-bottom {
+background: #EEEEEE;/*--bg-color--*/
+padding: 6px;
+}
+#footer-bottom p {
+text-align: center;
+color: #454545;
+padding-top: 6px;
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 2px;
+margin-bottom: 1px;
+}
+
+/* 模态窗口样式 */
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    color: #aaa;
+    border: none;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    border: none;
+}
+
+#file-input {
+    border: 1px solid lightgray;
+}
+
+.sorting-component {
+    display: flex; /* 使用flex布局 */
+    justify-content: flex-start; /* 靠左对齐 */
+    gap: 10px; /* 设置下拉菜单之间的间距 */
+}
+
+select {
+    padding: 2px; /* 给下拉菜单添加一些内边距 */
+    font-size: 14px; /* 设置字体大小 */
+    height: 30px;
+}
+
+#sort-category {
+    width: 160px;
+}
+
+#sort-order {
+    width: 80px;
+}
+
+

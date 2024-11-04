@@ -1,0 +1,62 @@
+body {
+  background-color: Azure
+}
+
+h1,h2 {
+  font-family: "Times New Roman", Times, serif;
+}
+
+p {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
+}
+
+img{
+    float: right;
+}
+
+th, td{
+    text-align: center;
+    padding: 15px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+table {
+  border-collapse: collapse;
+
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th {background-color: LightSteelBlue;}
+td {background-color: AliceBlue;}
+th:hover {background-color: SteelBlue;}
+td:hover {background-color: #d7ecff;}
+
+
+li{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.2em;
+}
+
+.button {
+  background-color: LightSteelBlue;
+  border-radius: 10px;
+  border: none;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-family: "Times New Roman", Times, serif;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: SteelBlue;
+}

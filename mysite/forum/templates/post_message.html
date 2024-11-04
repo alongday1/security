@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum_add{% endblock %}
+
+{% block masthead %}{% endblock %}
+
+{% block content %}
+<div class="ui vertical stripe segment" style="padding-bottom: 40px;padding-top:40px;" >
+    <div class="ui middle stackable grid container" style="margin-top:10px;margin-bottom:10px;">
+        
+        <div class="sixteen wide mobile four wided tablet four wide computer column ">
+            <!-- menu -->
+            <div class="ui vertical menu">
+                <h4 class="header item" style="color:#61220f ;font-size: large;">Messages</h4>
+                <div class="header item">request</div>
+                <a class="red item" onclick="showContent('outstanding')">
+                  &emsp;&emsp;Outstanding
+                  {% if unfinished_count != 0 %}
+                    <div class="ui red left pointing label">{{ unfinished_count }}</div>
+                  {% endif %}
+                </a>
+                <a class="red item" onclick="showContent('handled')">
+                    &emsp;&emsp;Handled
+                </a>
+                <a class="red item" onclick="showContent('received_likes')">
+                  Received likes
+                  <div class="ui red label">1</div>
+                </a>
+            </div>
+        </div>
+        <!-- menu -->
+        <!-- content -->
+        <div class="sixteen wide mobile eight wided tablet eight wide computer column ">
+            <!-- outstanding -->
+            <div id="outstanding" class="menu_content" style="display: none;">
+                {% if unfinished_count == 0 %}
+                <div class="ui yellow message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                      Congradulations!
+                    </div>
+                    There are no more outstanding requests left.
+                </div>
+                {% endif %}
+                <div class="ui cards">
+                {% for post_unfinished in post_unfinished_page_obj %}
+                    {% if post_unfinished.state == 0 %}
+                    <div class="ui fluid card">
+                        <div class="content">
+                            <div class="header">Join Request</div>
+                        </div>
+                        <div class="content">
+                            <div class="description">
+                                <span class="ui red text">{{ post_unfinished.user.username }}</span> wants to join the group activity: <a href="{% url 'group_detail' post_unfinished.target_post.id %}" style="color:#682222;">{{ post_unfinished.target_post.title }}</a>.
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <div class="ui two buttons">
+                                <div class="ui basic small green button" onclick="handlePass('{{ post_unfinished.id }}')">Pass</div>
+                                <div class="ui basic small red button" onclick="handleReject('{{ post_unfinished.id }}')">Reject</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="ui fluid card {% if post_unfinished.is_confirmed %}green{% else %}red{% endif %}">
+                        <div class="content">
+                            <div class="header">{{ post_unfinished.sponser }} Has {% if post_unfinished.is_confirmed %}Passed{% else %}Rejected{% endif %} Your Request:</div>
+                        </div>
+                        <div class="content">
+                            <div class="discription">
+                                Join activity: <a href="{% url 'group_detail' post_unfinished.target_post.id %}" style="color:#682222;">{{ post_unfinished.target_post.title }}</a>.
+                            </div>
+                        </div>
+                        <div class="extra content ">
+                            <div class="ui basic small right floated button" onclick="handleConfirm('{{ post_unfinished.id }}')">I got it.</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <!-- paginator -->
+                {% if post_unfinished_page_obj|length < 3 %}
+                    <div class="ui basic segment" style="height: 15em ;"></div>
+                {% endif %}
+                <div class="ui section divider"></div>
+                <div class="ui centered pagination menu">
+                    {% if post_unfinished_page_obj.has_previous %}
+                    <a class="item" href="?page=1">First</a>
+                    <a class="item" href="?page={{ post_unfinished_page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    <!-- <span class="item">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span> -->
+
+                    {% for num in post_unfinished_page_obj.paginator.page_range %}
+                        {% if post_unfinished_page_obj.number == num %}
+                            <a class="item active" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > post_unfinished_page_obj.number|add:'-3' and num < post_unfinished_page_obj.number|add:'3' %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == 1 or num == post_unfinished_page_obj.paginator.num_pages %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == post_unfinished_page_obj.number|add:'-4' or num == post_unfinished_page_obj.number|add:'4' %}
+                            <span class="item">...</span>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if post_unfinished_page_obj.has_next %}
+                    <a class="item" href="?page={{ post_unfinished_page_obj.next_page_number }}">Next</a>
+                    <a class="item" href="?page={{ post_unfinished_page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
+                <!-- end paginator -->
+            </div>
+            <!-- end outstanding -->
+            <!-- handled -->
+            <div id="handled" class="menu_content" style="display: none;">
+                {% if finished_count == 0 %}
+                <div class="ui yellow message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                      Oops!
+                    </div>
+                    There does't exsis any finished request.
+                </div>
+                {% endif %}
+                <div class="ui cards">
+                {% for post_finished in post_finished_page_obj %}
+                    {% if current_user.username == post_finished.user.username %}
+                        <div class="ui fluid card {% if post_finished.is_confirmed %}green{% else %}red{% endif %}">
+                            <div class="content">
+                                <div class="header">{{ post_finished.sponser }} Has {% if post_finished.is_confirmed %}Passed{% else %}Rejected{% endif %} Your Request:</div>
+                            </div>
+                            <div class="content">
+                                <div class="discription">
+                                    Join activity: <a href="{% url 'group_detail' post_finished.target_post.id %}" style="color:#682222;">{{ post_finished.target_post.title }}</a>.
+                                </div>
+                            </div>
+                            <div class="extra content ">
+                                <div class="discription text" style="text-align:center ;">You have checked it.</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="ui fluid {% if post_finished.is_confirmed %} green {% else %} red {% endif %} card">
+                            <div class="content">
+                                <div class="header">You Have {% if post_finished.is_confirmed %} Passed {% else %} Rejected {% endif %} the Request</div>
+                            </div>
+                            <div class="content">
+                                <div class="discription">
+                                    <span class="ui red text">{{ post_finished.user.username }}</span> wants to join the group activity: <a href="{% url 'group_detail' post_finished.target_post.id %}" style="color:#682222;">{{ post_finished.target_post.title }}</a>.
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <!-- paginator -->
+                {% if post_finished_page_obj|length < 3 %}
+                    <div class="ui basic segment" style="height: 15em ;"></div>
+                {% endif %}
+                <div class="ui section divider"></div>
+                <div class="ui centered pagination menu">
+                    {% if post_finished_page_obj.has_previous %}
+                    <a class="item" href="?page=1">First</a>
+                    <a class="item" href="?page={{ post_finished_page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    <!-- <span class="item">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span> -->
+
+                    {% for num in post_finished_page_obj.paginator.page_range %}
+                        {% if post_finished_page_obj.number == num %}
+                            <a class="item active" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > post_finished_page_obj.number|add:'-3' and num < post_finished_page_obj.number|add:'3' %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == 1 or num == post_finished_page_obj.paginator.num_pages %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == post_finished_page_obj.number|add:'-4' or num == post_finished_page_obj.number|add:'4' %}
+                            <span class="item">...</span>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if post_unfinished_page_obj.has_next %}
+                    <a class="item" href="?page={{ post_unfinished_page_obj.next_page_number }}">Next</a>
+                    <a class="item" href="?page={{ post_unfinished_page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
+                <!-- end paginator -->
+            </div>
+            <!-- end handled -->
+            <!-- likes -->
+            <div id="received_likes" class="menu_content" style="display: none;">
+                <h3>Received Likes</h3>
+                <p>Details about received likes go here.</p>
+            </div>
+            <!-- end likes -->
+        </div>
+        <!-- content -->
+        <div class="sixteen wide mobile four wided tablet four wide computer column"></div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    function showContent(contentId) {
+        const contents = document.querySelectorAll('.menu_content');
+        contents.forEach(content => {
+            content.style.display = 'none';
+        });
+
+        const selectedContent = document.getElementById(contentId);
+        if (selectedContent) {
+            selectedContent.style.display = 'block';
+        }
+
+    }
+
+    window.onload = function() {
+        showContent('outstanding');
+    };
+    function handlePass(joinRequestId) {
+        $.ajax({
+            url: '/forum/pass/' + joinRequestId + '/',
+            method: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert('Failed to pass the request.');
+                }
+            }
+        });
+    }
+
+    function handleReject(joinRequestId) {
+        $.ajax({
+            url: '/forum/reject/' + joinRequestId + '/',
+            method: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload(); 
+                } else {
+                    alert('Failed to reject the request.');
+                }
+            }
+        });
+    }
+    function handleConfirm(joinRequestId) {
+        $.ajax({
+            url: '/forum/confirm/' + joinRequestId + '/',
+            method: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload(); 
+                } else {
+                    alert('Failed to confirm the request.');
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

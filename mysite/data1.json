@@ -1,0 +1,894 @@
+[
+{
+    "model": "review.dish",
+    "pk": 51,
+    "fields": {
+        "name": "淮扬快餐",
+        "canteen": 1,
+        "description": "淮阳快餐，以其精致的口味和丰富的食材组合而著称，常常成为快节奏生活中的理想选择。餐品通常包括清淡的炒菜、丰盛的汤品以及各类主食，配以新鲜的时令蔬菜，确保每一口都是鲜香可口。无论是外卖还是堂食，淮阳快餐都注重色、香、味的统一，让人忍不住一尝再尝。尤其是在中午时分，淮阳快餐的便捷和美味吸引了众多学生。",
+        "count_comment": 0,
+        "rating": null,
+        "main_image": 25,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": [
+            40,
+            41,
+            46,
+            49,
+            52,
+            53,
+            55,
+            59,
+            60
+        ]
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 52,
+    "fields": {
+        "name": "砂锅",
+        "canteen": 1,
+        "description": "砂锅，因其优良的保温性能和独特的烹饪方式而备受青睐。它能将食材的天然风味锁住，慢慢炖煮，释放出食材的精华。砂锅料理的特点是汤汁浓郁，味道鲜美，常常搭配各种肉类、海鲜和时令蔬菜，形成独特的风味组合。每一道菜品都透出浓浓的家常气息，让人倍感温馨。特别是在寒冷的季节，热腾腾的砂锅菜无疑是最能温暖人心的美食选择。",
+        "count_comment": 5,
+        "rating": 4.5,
+        "main_image": null,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": [
+            36,
+            40,
+            43,
+            46,
+            52,
+            53,
+            58,
+            60
+        ]
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 53,
+    "fields": {
+        "name": "川菜",
+        "canteen": 1,
+        "description": "四川菜系，以麻、辣、鲜、香为主要特色，因其独特的调味和层次丰富的口感在国内外享有盛誉。川菜讲究\"一菜一格，百菜百味\"，在烹调上善用多种香料与调料，如花椒、辣椒、豆瓣酱等，使菜品的味道层次分明、变化多样。经典的川菜包括麻婆豆腐、水煮鱼、宫保鸡丁等，每道菜都带有浓郁的四川风情。川菜的辣并非纯粹的辛辣，而是伴随着香气和麻感，令食客在辛香中感受到食物的浓厚与鲜美。这种风味的独特性让川菜成为了许多人心目中的“下饭神器”，在味觉上充满了热烈和满足感。",
+        "count_comment": 0,
+        "rating": null,
+        "main_image": null,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": [
+            37,
+            38,
+            40,
+            46,
+            48,
+            52,
+            53,
+            55,
+            59,
+            60
+        ]
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 54,
+    "fields": {
+        "name": "馄饨",
+        "canteen": 2,
+        "description": "馄饨是一种传统的中式面点，以其轻薄的面皮包裹细腻的馅料而著称。面皮在煮熟后晶莹剔透，入口滑嫩，馅料通常是鲜嫩的猪肉，搭配虾仁、青菜或香菇等，使得每一口都满是汤汁与鲜香。馄饨可以水煮、清汤、红油或拌料，汤头清淡而温润，带有葱姜的淡淡香味，尤其适合寒冷的天气享用。无论是作为早餐还是小吃，馄饨的简单与美味让它深受人们喜爱。",
+        "count_comment": 2,
+        "rating": 3.5,
+        "main_image": 26,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": [
+            36,
+            40,
+            43,
+            45,
+            52,
+            53,
+            55
+        ]
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 55,
+    "fields": {
+        "name": "水饺",
+        "canteen": 2,
+        "description": "水饺是经典的中国传统美食，皮薄馅丰、味道鲜美，尤其在冬季和节日时深受人们的青睐。水饺的馅料可丰富多样，从猪肉大葱到韭菜鸡蛋，再到更具创新性的海鲜馅，每种搭配都带来不同的口感体验。水饺煮熟后外皮柔韧，带有麦香，咬下一口后，馅料的鲜汁和调味料完美融合，味道香浓。水饺不仅仅是食物，更是一种家的味道和团圆的象征。",
+        "count_comment": 1,
+        "rating": null,
+        "main_image": null,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": [
+            36,
+            40,
+            43,
+            45,
+            52,
+            53,
+            55
+        ]
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 56,
+    "fields": {
+        "name": "炒饭",
+        "canteen": 2,
+        "description": "炒饭是一道简便却令人满足的家常美味，以米饭为主料，配上鸡蛋、葱花、胡萝卜、青豆等蔬菜，简单翻炒即可成就一盘色香味俱全的佳肴。炒饭的精髓在于粒粒分明，入口带有淡淡的锅气，调味咸香适中。经典的扬州炒饭、蛋炒饭等更是名扬四海，成为了中式炒饭的代表。炒饭既可以作为主餐，也能成为便捷又美味的宵夜选择。",
+        "count_comment": 2,
+        "rating": 4.0,
+        "main_image": 33,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": [
+            38,
+            40,
+            46,
+            47,
+            55
+        ]
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 57,
+    "fields": {
+        "name": "麻辣烫",
+        "canteen": 2,
+        "description": "麻辣烫是一道街头美食，以其香辣浓郁的口感而闻名。食材多样，通常有新鲜的蔬菜、豆制品、菌菇类、鱼丸、肉片等，所有食材串成串后放入麻辣高汤中煮熟，汤底由花椒、辣椒、八角等香料熬制而成，汤香四溢，麻辣过瘾。麻辣烫可以根据个人口味调整辣度，既适合喜欢重口味的人，也能微调出适合怕辣者的温和版本。",
+        "count_comment": 2,
+        "rating": 3.0,
+        "main_image": 32,
+        "count_like": 4,
+        "count_unlike": 0,
+        "tags": [
+            38,
+            40,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            55,
+            57,
+            58,
+            59,
+            60,
+            61
+        ]
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 58,
+    "fields": {
+        "name": "测试",
+        "canteen": 1,
+        "description": "描述",
+        "count_comment": 0,
+        "rating": null,
+        "main_image": 41,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": []
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 59,
+    "fields": {
+        "name": "测试dfds",
+        "canteen": 2,
+        "description": "描述",
+        "count_comment": 0,
+        "rating": null,
+        "main_image": 42,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": []
+    }
+},
+{
+    "model": "review.dish",
+    "pk": 60,
+    "fields": {
+        "name": "fdsfasdf",
+        "canteen": 1,
+        "description": "dfdsf",
+        "count_comment": 0,
+        "rating": null,
+        "main_image": 45,
+        "count_like": 0,
+        "count_unlike": 0,
+        "tags": []
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 36,
+    "fields": {
+        "name": "清淡",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 37,
+    "fields": {
+        "name": "麻辣",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 38,
+    "fields": {
+        "name": "重油",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 39,
+    "fields": {
+        "name": "昂贵",
+        "type": 5
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 40,
+    "fields": {
+        "name": "实惠",
+        "type": 5
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 41,
+    "fields": {
+        "name": "廉价",
+        "type": 5
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 42,
+    "fields": {
+        "name": "小吃",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 43,
+    "fields": {
+        "name": "汤羹",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 44,
+    "fields": {
+        "name": "粉类",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 45,
+    "fields": {
+        "name": "面食",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 46,
+    "fields": {
+        "name": "饭食",
+        "type": 1
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 47,
+    "fields": {
+        "name": "干香",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 48,
+    "fields": {
+        "name": "咸香",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 49,
+    "fields": {
+        "name": "微甜",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 50,
+    "fields": {
+        "name": "酸爽",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 51,
+    "fields": {
+        "name": "鲜美",
+        "type": 2
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 52,
+    "fields": {
+        "name": "蔬菜",
+        "type": 4
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 53,
+    "fields": {
+        "name": "红肉",
+        "type": 4
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 54,
+    "fields": {
+        "name": "鱼肉",
+        "type": 4
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 55,
+    "fields": {
+        "name": "家常",
+        "type": 3
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 57,
+    "fields": {
+        "name": "西式",
+        "type": 3
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 58,
+    "fields": {
+        "name": "大份",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 59,
+    "fields": {
+        "name": "自选",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 60,
+    "fields": {
+        "name": "口味多样",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 61,
+    "fields": {
+        "name": "热门",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 62,
+    "fields": {
+        "name": "测试",
+        "type": 0
+    }
+},
+{
+    "model": "review.tag",
+    "pk": 65,
+    "fields": {
+        "name": "dfsfd",
+        "type": 0
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 1,
+    "fields": {
+        "name": "第一餐饮大楼",
+        "location": ""
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 2,
+    "fields": {
+        "name": "第二餐饮大楼",
+        "location": ""
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 3,
+    "fields": {
+        "name": "第三餐饮大楼",
+        "location": ""
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 4,
+    "fields": {
+        "name": "第四餐饮大楼",
+        "location": ""
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 5,
+    "fields": {
+        "name": "第五餐饮大楼",
+        "location": ""
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 6,
+    "fields": {
+        "name": "第六餐饮大楼",
+        "location": ""
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 7,
+    "fields": {
+        "name": "第七餐饮大楼",
+        "location": ""
+    }
+},
+{
+    "model": "review.canteen",
+    "pk": 8,
+    "fields": {
+        "name": "玉兰苑",
+        "location": ""
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 25,
+    "fields": {
+        "dish": 51,
+        "image": "dish_images/OIP.jpg",
+        "is_main": true
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 26,
+    "fields": {
+        "dish": 54,
+        "image": "dish_images/hundun.jpg",
+        "is_main": true
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 27,
+    "fields": {
+        "dish": 54,
+        "image": "dish_images/hundun1.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 28,
+    "fields": {
+        "dish": 54,
+        "image": "dish_images/hundun2.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 29,
+    "fields": {
+        "dish": 54,
+        "image": "dish_images/hundun3.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 30,
+    "fields": {
+        "dish": 54,
+        "image": "dish_images/hundun4.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 31,
+    "fields": {
+        "dish": 54,
+        "image": "dish_images/hundun5.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 32,
+    "fields": {
+        "dish": 57,
+        "image": "dish_images/malatang.jpg",
+        "is_main": true
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 33,
+    "fields": {
+        "dish": 56,
+        "image": "dish_images/R_1.jpg",
+        "is_main": true
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 34,
+    "fields": {
+        "dish": 56,
+        "image": "dish_images/22458224_1.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 35,
+    "fields": {
+        "dish": 56,
+        "image": "dish_images/f59b81fc-dba1-4778-8559-531276216d0f_KGswBg0.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 36,
+    "fields": {
+        "dish": 57,
+        "image": "dish_images/f5728bbd-e01d-4e56-b85a-18aa6d6e9dcf_NAPWyEI.jpeg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 37,
+    "fields": {
+        "dish": 57,
+        "image": "dish_images/ca4f7270-a8bd-4c28-a637-15bf7d7c16a2_Xc0DcTo.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 38,
+    "fields": {
+        "dish": 57,
+        "image": "dish_images/dbf15d9b-00f3-4dfd-a558-a817bfe55646_heiGTjm.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 39,
+    "fields": {
+        "dish": 51,
+        "image": "dish_images/b7617308-feb0-42e3-8d91-408fd2c40836_CDo2fDK.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 40,
+    "fields": {
+        "dish": 57,
+        "image": "dish_images/4049408.jpg",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 41,
+    "fields": {
+        "dish": 58,
+        "image": "comment_images/测试.png",
+        "is_main": true
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 42,
+    "fields": {
+        "dish": 59,
+        "image": "comment_images/测试dfds.png",
+        "is_main": true
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 43,
+    "fields": {
+        "dish": 57,
+        "image": "comment_images/4caa3015-3559-48ed-bcad-002736390a61.png",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 44,
+    "fields": {
+        "dish": 57,
+        "image": "dish_images/e9365f03-0b48-4576-88a6-7c88935e324a.png",
+        "is_main": false
+    }
+},
+{
+    "model": "review.dishimage",
+    "pk": 45,
+    "fields": {
+        "dish": 60,
+        "image": "dish_images/fdsfasdf.png",
+        "is_main": true
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 90,
+    "fields": {
+        "user": [
+            "zyy"
+        ],
+        "dish": 57,
+        "content": "dfsadfasdf",
+        "datetime": "2024-11-02T03:45:33.248Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 91,
+    "fields": {
+        "user": [
+            "asus"
+        ],
+        "dish": 57,
+        "content": "",
+        "datetime": "2024-11-02T03:50:16.297Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 92,
+    "fields": {
+        "user": [
+            "asus"
+        ],
+        "dish": 54,
+        "content": "好吃",
+        "datetime": "2024-11-02T13:39:31.147Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 93,
+    "fields": {
+        "user": [
+            "zyy"
+        ],
+        "dish": 54,
+        "content": "还可以",
+        "datetime": "2024-11-02T13:54:59.894Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 94,
+    "fields": {
+        "user": [
+            "zyy"
+        ],
+        "dish": 52,
+        "content": "我是第一个",
+        "datetime": "2024-11-02T13:56:35.282Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 95,
+    "fields": {
+        "user": [
+            "asus"
+        ],
+        "dish": 52,
+        "content": "很好",
+        "datetime": "2024-11-02T13:57:50.424Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 96,
+    "fields": {
+        "user": [
+            "asus"
+        ],
+        "dish": 52,
+        "content": "哈哈",
+        "datetime": "2024-11-02T13:58:31.648Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 97,
+    "fields": {
+        "user": [
+            "asus"
+        ],
+        "dish": 52,
+        "content": "",
+        "datetime": "2024-11-02T13:59:04.683Z"
+    }
+},
+{
+    "model": "review.comment",
+    "pk": 98,
+    "fields": {
+        "user": [
+            "asus"
+        ],
+        "dish": 52,
+        "content": "",
+        "datetime": "2024-11-02T13:59:27.703Z"
+    }
+},
+{
+    "model": "review.commentimage",
+    "pk": 21,
+    "fields": {
+        "comment": 91,
+        "image": "comment_images/bcde86a9-3ac5-4178-938f-147bb3e867be.png"
+    }
+},
+{
+    "model": "review.commentimage",
+    "pk": 22,
+    "fields": {
+        "comment": 92,
+        "image": "comment_images/b88e1ea8-46bb-41b9-b8ee-5ae9aa0ee451.png"
+    }
+},
+{
+    "model": "review.rating",
+    "pk": 1,
+    "fields": {
+        "value": 1,
+        "user": [
+            "zyy"
+        ],
+        "dish": 57
+    }
+},
+{
+    "model": "review.rating",
+    "pk": 2,
+    "fields": {
+        "value": 5,
+        "user": [
+            "asus"
+        ],
+        "dish": 57
+    }
+},
+{
+    "model": "review.rating",
+    "pk": 3,
+    "fields": {
+        "value": 4,
+        "user": [
+            "asus"
+        ],
+        "dish": 54
+    }
+},
+{
+    "model": "review.rating",
+    "pk": 4,
+    "fields": {
+        "value": 3,
+        "user": [
+            "zyy"
+        ],
+        "dish": 54
+    }
+},
+{
+    "model": "review.rating",
+    "pk": 5,
+    "fields": {
+        "value": 4,
+        "user": [
+            "zyy"
+        ],
+        "dish": 52
+    }
+},
+{
+    "model": "review.rating",
+    "pk": 6,
+    "fields": {
+        "value": 5,
+        "user": [
+            "asus"
+        ],
+        "dish": 52
+    }
+},
+{
+    "model": "review.rating",
+    "pk": 7,
+    "fields": {
+        "value": 4,
+        "user": [
+            "asus"
+        ],
+        "dish": 56
+    }
+}
+]
