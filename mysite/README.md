@@ -1,1 +1,3 @@
+App的名字没有改变，但将所有的static文件放到了项目根目录中的static目录中。
 
+主要的urls和settings在mysite/mysite目录下的对应py文件中。
