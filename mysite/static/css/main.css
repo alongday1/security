@@ -75,7 +75,7 @@ a:active {
 }
 .heading span {
   font-size: 45px;
-  color: #ff530a;
+  color: #ffde7d;
   font-weight: 600;
 }
 .heading:before {
@@ -329,9 +329,7 @@ nav .block .navbar-default .navbar-nav > .active > a:hover:before {
   background: #CBC4B5;
   margin-left: -45px;
 }
-#blog .block ul li p {
-  padding-top: 25px;
-}
+
 #blog .block ul li .blog-img {
   float: left;
   width: 50%;
