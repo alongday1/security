@@ -419,9 +419,11 @@ def submit_rating(request, dish_id):
     return HttpResponseRedirect(referer_url)
 
 
-@login_required
 def update_dish_info(request):
     if request.method == 'POST':
+        if request.user.is_authenticated == False:
+            return JsonResponse({"message": "请先登录！"})
+
         try:
             # 解析 JSON 数据
             data = json.loads(request.body)
@@ -435,7 +437,7 @@ def update_dish_info(request):
             dish.tags.set(tag_objects)
             dish.save()
 
-            return JsonResponse({'status': 'success', 'tags': tags, 'dish_id': dish_id})
+            return JsonResponse({'message': "修改成功！", 'tags': tags, 'dish_id': dish_id})
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
     return JsonResponse({"error": "请求方法错误"}, status=400)
