@@ -202,11 +202,13 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             // 处理服务器响应
             console.log("服务器响应:", data);
-            alert("标签已成功添加！");
+            if (data.success == true)
+                alert("标签已成功添加！");
+            else alert(data.error);
         })
         .catch(error => {
             console.error("请求发生错误:", error);
-            alert("添加失败，该标签已存在！");
+            alert(error);
         });
     };
 });
@@ -251,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             // 处理服务器响应
             console.log("服务器响应:", data);
-            alert("菜品已成功添加！");
+            alert(data.message);
 //            const dishModal = bootstrap.Modal.getInstance(document.getElementById("dishModal"));
 //            if (dishModal) {
 //                dishModal.hide();
@@ -264,7 +266,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 });
-
-
-
-
