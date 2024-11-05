@@ -255,40 +255,71 @@
                 Mealmate
             </div>
             <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-            <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_post_default' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
+            <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}background-color:#f2d176;{% endif %}">
+                Forum
+                <i class="dropdown icon"></i>
+                <div class="menu" style="background-color:#ffde7d ;">
+                    <a class="item" href="{% url 'forum_post_default' %}">Post</a>
+                    <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
+                </div>
+            </div>            <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
             <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
-            <a class="item {% if active_link == '111' %}active{% endif %}" href="#" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Careers</a>
+            <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
             <div class="right menu">
+                {% if is_authenticated %}
+                <div class="ui dropdown item" style="padding: 0.5em;padding-bottom:0.7em;font-family: 'Itim', cursive;font-size:20px;">
+                    Hello, {{user.username}} !
+                    <div class="menu" style="background-color:#ffde7d ;">
+                        <div class="header">{{user.email}}</div>
+                        <div class="ui divider attached"></div>
+                        <a class="item" href="">Change Information</a>
+                        <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
+                    </div>
+                </div>
+                {% else %}
                 <div class="item">
-                    <a class="ui basic button">Log in</a>
+                    <a class="ui basic button" href= "/accounts/log-in">Log in</a>
                 </div>
                 <div class="item">
-                    <a class="ui basic button">Sign Up</a>
+                    <a class="ui basic button" href= "/accounts/sign-up">Sign Up</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
 
     <!-- Sidebar Menu -->
-    <div class="ui vertical sidebar menu" style="background-color:#d0af4c ;">
+    <div class="ui vertical sidebar menu" style="background-color:#ffde7d ;">
         <div class="item" style="font-family: 'PermanentMarker', cursive;font-size:26px;padding: 0.5em;">
             <img class="ui avatar image" src="{% static 'img/icon/baozi.png' %}" alt="icon" style="margin-right: 12px;" />
             Mealmate
         </div>
-        <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-        <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_post_default' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
-        <div class="ui dropdown item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">
-            Forum
-            <i class="dropdown icon"></i>
-            <div class="menu">
-                <a class="item" href="{% url 'forum_post_default' 1 %}">Post</a>
-                <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
-            </div>
+        {% if is_authenticated %}
+        <div class="ui dropdown item" style="padding: 0.5em;padding-bottom:0.7em;font-family: 'Itim', cursive;font-size:20px;">
+            Hello, {{user.username}} !
         </div>
+        <div class="ui divider"></div>
+        {% endif %}
+        <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
+        <div class="ui item header" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}background-color:#f2d176;{% endif %}">
+            Forum
+        </div>  
+        <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href="{% url 'forum_post_default' %}">&emsp;Post</a>
+        <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href="{% url 'group_post_list' %}">&emsp;Group Post</a>
         <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
-        <a class="item {% if active_link == '111' %}active{% endif %}" href="#" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Careers</a>
-        <a class="item">Login</a>
-        <a class="item">Signup</a>
+        <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
+        <div class="ui divider hidden"></div>
+        {% if is_authenticated %}
+        <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href="">Change Information</a>
+        <a class="item logout-link" style="color:#f05654 !important;width: 100%;padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" >Log out</a>
+        {% else %}
+        <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/log-in">
+            Log in
+        </a>
+        <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/sign-up">
+            Sign Up
+        </a>
+        {% endif %}
     </div>
 
 
@@ -306,7 +337,7 @@
                             <img class="ui image" src="{% static 'img/icon/baozi.png' %}" alt="icon" style="margin-right: 12px;height: 30px;" />
                             Mealmate
                         </div>
-                        <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
+                        <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
                         <!-- <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_post_default' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a> -->
                         <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}color:#ffb61e;{% endif %}">
                             Forum
@@ -317,7 +348,7 @@
                             </div>
                         </div>
                         <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
-                        <a class="item {% if active_link == '111' %}active{% endif %}" href="#" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Careers</a>
+                        <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
                     </div>
                     <div class="right item">
                         <!-- <div class="item">
@@ -333,8 +364,20 @@
                                 <i class="bell icon brown"></i>
                             </a>
                         </div>
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Log in</a>
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Sign Up</a>
+                        {% if is_authenticated %}
+                        <div class="ui dropdown item" style="padding: 0.5em;padding-bottom:0.7em;font-family: 'Itim', cursive;font-size:20px;">
+                            Hello, {{user.username}} !
+                            <div class="menu">
+                                <div class="header">{{user.email}}</div>
+                                <div class="ui divider attached"></div>
+                                <a class="item" href="">Change Information</a>
+                                <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/log-in">Log in</a>
+                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/sign-up">Sign Up</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -400,6 +443,7 @@
     </div>
 
     <script>
+        
         $(document).ready(function() {
             $('.login-toast').on('click', function(event) {
                     event.preventDefault(); 
@@ -415,6 +459,24 @@
                     ;
                 });
         });
+    </script>
+    <script>
+    document.querySelectorAll(".logout-link").forEach(function(logoutLink) {
+        logoutLink.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            fetch("/accounts/log-out/", {
+                method: 'POST',  
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+            }).then(response => {
+                window.location.reload();
+            }).catch(error => {
+                console.error("Error logging out:", error);
+            });
+        });
+    });
     </script>
     {% block script %}{% endblock %}
 </body>

@@ -105,8 +105,8 @@
             <div class="ui list">
                 <div class="ui item ">
                     <div class="ui content">
-                        <a class="ui like right floated" id="like-button" style="color: grey;">
-                            <i class="heart outline icon grey"></i> {{ post.likes }} Likes
+                        <a class="ui like right floated" id="like-button" data-post-id="{{ post.id }}" style="color: grey;">
+                            <i class="heart outline icon grey"></i> <span class="likes-count">{{ post.likes }}</span> Likes
                         </a>
                         <i class="eye outline icon grey"></i>
                         {{ post.click }}
@@ -152,8 +152,40 @@
 {% block script %}
 <script>
     $(document).ready(function () {
+        const post_id = $('#like-button').data('post-id');
+
+        $.get(`/forum/post/check_like_status/${post_id}/`, function(response) {
+            if (response.liked) {
+                $('#like-button i').removeClass('outline grey').addClass('red');
+            }
+        });
+
+
         $('#like-button').click(function () {
-            $(this).find('i').toggleClass('outline red grey');
+            const button = $(this);
+            const icon = button.find('i');
+            const likesCountElement = button.find('.likes-count'); 
+
+            $.ajax({
+                url: `/forum/post/toggle_like/${post_id}/`,  
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}', 
+                },
+                success: function (response) {
+                    if (response.status === 'liked') {
+                        icon.removeClass('outline grey').addClass('red');
+                    } else if (response.status === 'unliked') {
+                        icon.removeClass('red').addClass('outline grey');
+                    }
+
+                    // 更新点赞数
+                    likesCountElement.text(response.likes);  
+                },
+                error: function () {
+                    console.error("Error processing like.");
+                }
+            });
         });
 
         let postId;

@@ -91,7 +91,7 @@
                             <div class="ui label">{{ tag.name }}</div>
                         {% endfor %}
                         <span class="right floated like">
-                            <i class="like icon"></i>
+                            <i class="like icon {% if post.id in liked_post_ids %}red{% endif %}"></i>
                             Like({{ post.likes }})
                             &emsp;
                             <i class="eye outline icon"></i>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 import requests
 from datetime import datetime
-from forum.models import GroupPost,Post,Forum,Tag,PostImage,JoinRequest
+from forum.models import GroupPost,Post,Forum,Tag,PostImage,JoinRequest,Like
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_http_methods
 import random
@@ -19,7 +19,9 @@ def base_view(request):
     if request.user.is_authenticated:
         condition1 = JoinRequest.objects.filter(sponser=user, state=0).exists()
         condition2 = JoinRequest.objects.filter(user=user, state=1).exists()
-        message_reminder_visible = condition1 or condition2
+        posts = Post.objects.filter(author=user)
+        condition3 = Like.objects.filter(post__in=posts, is_confirmed=False).exists()
+        message_reminder_visible = condition1 or condition2 or condition3
         is_authenticated = True
     else:
         message_reminder_visible = False
@@ -43,7 +45,31 @@ def forum_message_view(request):
     post_finished_page_obj = post_finished_paginator.get_page(post_finished_page_number)
 
     message_reminder_visible,is_authenticated = base_view(request)
-    return render(request,'post_message.html',{'message_reminder_visible': message_reminder_visible,'is_authenticated':is_authenticated,'current_user':current_user,'unfinished_count':unfinished_count,'post_unfinished_page_obj':post_unfinished_page_obj,'post_finished_page_obj':post_finished_page_obj,'finished_count':finished_count,})
+
+    user_posts = Post.objects.filter(author=current_user)
+    likes = Like.objects.filter(post__in=user_posts)
+    likes_count = Like.objects.filter(post__in=user_posts,is_confirmed=False).count()
+
+    likes_paginator = Paginator(likes,20)
+    like_page_number = request.GET.get('likes_page', 1)
+    like_page_obj = likes_paginator.get_page(like_page_number)
+    like_count = likes.count()
+
+    return render(request,'post_message.html',{'message_reminder_visible': message_reminder_visible,'is_authenticated':is_authenticated,'current_user':current_user,'unfinished_count':unfinished_count,'post_unfinished_page_obj':post_unfinished_page_obj,'post_finished_page_obj':post_finished_page_obj,'like_page_obj':like_page_obj,'finished_count':finished_count,'like_count':like_count,'likes_count':likes_count,})
+
+@login_required
+@csrf_exempt
+def update_received_likes(request):
+    if request.method == 'POST':
+        user = request.user
+
+        posts = Post.objects.filter(author=user)
+
+        likes = Like.objects.filter(post__in=posts, is_confirmed=False)
+        likes.update(is_confirmed=True)
+        
+        return JsonResponse({'status': 'success'}, status=200)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
 def forum_home_view(request):
     message_reminder_visible,is_authenticated = base_view(request)
@@ -79,7 +105,10 @@ def forum_post_view(request, forum_id=0):
     tag_counts = Tag.objects.annotate(post_count=Count('post')).values('name', 'post_count')
     tag_count = [{'name': tag['name'], 'value': tag['post_count']} for tag in tag_counts]
 
-    return render(request,'forum_post.html',{'is_authenticated':is_authenticated,'tag_count':tag_count,'active_link': 'forum_home','forums':forums,'posts':page_obj,'selected_forum_id': selected_forum_id,'forum_target':forum_target,'message_reminder_visible': message_reminder_visible,'tag_name':tag_name,})
+    liked_posts = Like.objects.filter(user=request.user)
+    liked_post_ids = liked_posts.values_list('post', flat=True)
+
+    return render(request,'forum_post.html',{'is_authenticated':is_authenticated,'tag_count':tag_count,'active_link': 'forum_home','forums':forums,'posts':page_obj,'selected_forum_id': selected_forum_id,'forum_target':forum_target,'message_reminder_visible': message_reminder_visible,'tag_name':tag_name,'liked_post_ids': liked_post_ids,})
 
 def group_post_view(request):
     message_reminder_visible,is_authenticated = base_view(request)
@@ -411,3 +440,34 @@ def edit_group_post(request, post_id):
             return render(request, 'group_post_edit.html', context)
     
     return render(request,'group_post_edit.html', {'username': request.user.username,'active_link': 'forum_home','message_reminder_visible': message_reminder_visible,'title': title,'address': address,'target_time':target_time_str,'max':max_participants,'min':min_participants,'content': content,'is_authenticated':is_authenticated,})
+
+@login_required
+@csrf_exempt
+def post_toggle_like(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    
+    like_instance = Like.objects.filter(user=user, post=post).first()
+
+    if like_instance:
+        like_instance.delete()
+        post.likes = post.likes -1
+        post.save(update_fields=['likes'])
+        return JsonResponse({'status': 'unliked', 'likes': post.likes})
+    else:
+        Like.objects.create(user=user, post=post, is_confirmed=False)
+        post.likes = post.likes + 1
+        post.save(update_fields=['likes'])
+        return JsonResponse({'status': 'liked', 'likes': post.likes})
+
+@login_required
+def check_like_status(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    
+    like_instance = Like.objects.filter(user=user, post=post).first()
+
+    if like_instance:
+        return JsonResponse({'liked': True})
+    else:
+        return JsonResponse({'liked': False})

@@ -20,7 +20,7 @@ from django.urls import path,include
 from mainpage import views as mainpageViews
 
 from management.views import home_view
-from forum.views import forum_home_view,forum_post_view,post_detail,post_create_view,create_tag,group_post_view,group_detail,join_group,forum_message_view,pass_request,reject_request,confirm_request,delete_post,delete_group_post,edit_post,edit_group_post
+from forum.views import forum_home_view,forum_post_view,post_detail,post_create_view,create_tag,group_post_view,group_detail,join_group,forum_message_view,pass_request,reject_request,confirm_request,delete_post,delete_group_post,edit_post,edit_group_post,post_toggle_like,check_like_status,update_received_likes
 from django.conf import settings
 from django.conf.urls.static import static
 from api.views import PostListView,SearchPostView
@@ -50,12 +50,15 @@ urlpatterns = [
     path('forum/', forum_post_view, name='forum_post_default'),
     path('forum/group/', group_post_view, name='group_post_list'),
     path('forum/post/<uuid:uuid>/', post_detail, name='post_detail'),
+    path('forum/post/toggle_like/<uuid:post_id>/', post_toggle_like, name='toggle_like'),
+    path('forum/post/check_like_status/<uuid:post_id>/', check_like_status, name='check_like_status'),
     path('forum/group_post/<uuid:uuid>/', group_detail, name='group_detail'),
     path('api/posts/', PostListView.as_view(), name='post-list'),
     path('search/post/', SearchPostView.as_view(), name='search-post'),
     path('create-tag/', create_tag, name='create_tag'),
     path('forum/group_post/join/<uuid:group_post_id>/', join_group, name='join_group'),
     path('message/forum/', forum_message_view, name='message_forum', ),
+    path('message/update_received_likes/', update_received_likes, name='update_received_likes'),
     path('forum/pass/<uuid:join_request_id>/', pass_request, name='pass_request'),
     path('forum/reject/<uuid:join_request_id>/', reject_request, name='reject_request'),
     path('forum/confirm/<uuid:join_request_id>/', confirm_request, name='confirm_request'),

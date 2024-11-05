@@ -22,9 +22,9 @@
                 <a class="red item" onclick="showContent('handled')">
                     &emsp;&emsp;Handled
                 </a>
-                <a class="red item" onclick="showContent('received_likes')">
+                <a class="red item" onclick="markLikesAsConfirmed();showContent('received_likes')">
                   Received likes
-                  <div class="ui red label">1</div>
+                  <div class="ui red label">{{likes_count}}</div>
                 </a>
             </div>
         </div>
@@ -80,7 +80,7 @@
                 </div>
                 <!-- paginator -->
                 {% if post_unfinished_page_obj|length < 3 %}
-                    <div class="ui basic segment" style="height: 15em ;"></div>
+                <div class="ui basic segment" style="height: 15em ;"></div>
                 {% endif %}
                 <div class="ui section divider"></div>
                 <div class="ui centered pagination menu">
@@ -186,9 +186,57 @@
             </div>
             <!-- end handled -->
             <!-- likes -->
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
             <div id="received_likes" class="menu_content" style="display: none;">
-                <h3>Received Likes</h3>
-                <p>Details about received likes go here.</p>
+                {% if like_count == 0 %}
+                <div class="ui yellow message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                      Oops!
+                    </div>
+                    You have not receives any like.
+                </div>
+                {% endif %}
+                <div class="ui cards">
+                {% for like in like_page_obj %}
+                <div class="ui fluid {% if like.is_confirmed %}{% else %}brown{% endif %} card">
+                    <div class="content">
+                        {{like.user.username}} has liked your post:<a href="{% url 'group_detail' like.post.id %}" style="color:#682222;">{{ like.post.title }}</a>.
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+                <!-- paginator -->
+                {% if like_page_obj|length < 3 %}
+                <div class="ui basic segment" style="height: 15em ;"></div>
+                {% endif %}
+                <div class="ui section divider"></div>
+                <div class="ui centered pagination menu">
+                    {% if like_page_obj.has_previous %}
+                    <a class="item" href="?page=1">First</a>
+                    <a class="item" href="?page={{ like_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    <!-- <span class="item">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span> -->
+
+                    {% for num in like_page_obj.paginator.page_range %}
+                        {% if like_page_obj.number == num %}
+                            <a class="item active" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > like_page_obj.number|add:'-3' and num < like_page_obj.number|add:'3' %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == 1 or num == like_page_obj.paginator.num_pages %}
+                            <a class="item" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num == like_page_obj.number|add:'-4' or num == like_page_obj.number|add:'4' %}
+                            <span class="item">...</span>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if like_page_obj.has_next %}
+                    <a class="item" href="?page={{ like_page_obj.next_page_number }}">Next</a>
+                    <a class="item" href="?page={{ like_page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
+                <!-- end paginator -->
             </div>
             <!-- end likes -->
         </div>
@@ -266,5 +314,35 @@
             }
         });
     }
+</script>
+<script>
+function markLikesAsConfirmed() {
+    fetch('/message/update_received_likes/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({
+            'user_id': '{{ current_user.id }}', 
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log('Likes marked as confirmed');
+        } else {
+            console.log('Error:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function getCSRFToken() {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    return csrfToken;
+}
 </script>
 {% endblock %}

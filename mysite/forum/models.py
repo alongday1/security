@@ -83,3 +83,16 @@ class JoinRequest(models.Model):
 class PostImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     image = models.FileField(upload_to='illustrations/')
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    is_confirmed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user', 'post')
+        managed = True
+
+    def __str__(self):
+        return f'{self.user} liked {self.post}'

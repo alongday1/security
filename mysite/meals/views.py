@@ -10,10 +10,12 @@ from django.views.decorators.csrf import csrf_exempt
 from collections import defaultdict
 import logging
 from django.core.exceptions import ObjectDoesNotExist
+from forum.views import base_view
 
 
 def record_list(request):
     # 检查会话中是否存在日期
+    message_reminder_visible,is_authenticated = base_view(request)
     if 'current_date' not in request.session:
         request.session['current_date'] = datetime.now().date().strftime('%Y-%m-%d')
 
@@ -144,6 +146,8 @@ def record_list(request):
         'favorite_meals': favorite_meals,
         'remainingcalories': remainingcalories,
         'active_link': 'record_list',
+        'message_reminder_visible': message_reminder_visible,
+        'is_authenticated':is_authenticated,
     })
 
 def delete_meal(request, meal_id):
