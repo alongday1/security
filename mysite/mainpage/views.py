@@ -57,10 +57,15 @@ def test_mp(request):
     dishes = Dish.objects.all()[:6]
     dishImages = DishImage.objects.all()[:6]
 
-    message_reminder_visible = base_view(request)
+    message_reminder_visible,is_authenticated = base_view(request)
     response = requests.get("https://canteen.sjtu.edu.cn/CARD/Ajax/Place")
     canteen_data = response.json()
     group_posts = GroupPost.objects.order_by('-create_at')[:3]
     posts = Post.objects.order_by('-click')[:5]
 
-    return render(request, "index.html", {'dishes': dishes, 'dish_image':  dishImages, 'canteen_data': canteen_data,'group_posts': group_posts,'posts':posts,'message_reminder_visible': message_reminder_visible,})
+    if is_authenticated:
+        user = request.user
+    else:
+        user = None
+
+    return render(request, "index.html", {'active_link':'home','dishes': dishes, 'dish_image':  dishImages, 'canteen_data': canteen_data,'group_posts': group_posts,'posts':posts,'message_reminder_visible': message_reminder_visible,'is_authenticated':is_authenticated,'user':user,})

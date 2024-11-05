@@ -318,6 +318,7 @@
 		<img class="img-responsive" src="/header.jpg" alt="">
 	</section>
 	-->
+    
 	    <div class="ui large top fixed hidden menu" style="background-color:#ffde7d ;">
         <div class="ui container">
             <div class="item" style="font-family: 'PermanentMarker', cursive;font-size:26px;padding: 0.5em;">
@@ -325,16 +326,35 @@
                 Mealmate
             </div>
             <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-            <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
+            <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}background-color:#f2d176;{% endif %}">
+                Forum
+                <i class="dropdown icon"></i>
+                <div class="menu" style="background-color:#ffde7d ;">
+                    <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
+                    <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
+                </div>
+            </div>
             <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
-            <a class="item {% if active_link == '111' %}active{% endif %}" href="#" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Careers</a>
+            <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
             <div class="right menu">
+                {% if is_authenticated %}
+                <div class="ui dropdown item" style="padding: 0.5em;padding-bottom:0.7em;font-family: 'Itim', cursive;font-size:20px;">
+                    Hello, {{user.username}} !
+                    <div class="menu" style="background-color:#ffde7d ;">
+                        <div class="header">{{user.email}}</div>
+                        <div class="ui divider attached"></div>
+                        <a class="item" hred="">Change Information</a>
+                        <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
+                    </div>
+                </div>
+                {% else %}
                 <div class="item">
-                    <a class="ui basic button">Log in</a>
+                    <a class="ui basic button" href= "/accounts/log-in">Log in</a>
                 </div>
                 <div class="item">
-                    <a class="ui basic button">Sign Up</a>
+                    <a class="ui basic button" href= "/accounts/sign-up">Sign Up</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -405,7 +425,6 @@
                             Forum
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <a class="item" href="{% url 'forum_home' %}">Summary</a>
                                 <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
                                 <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
                             </div>
@@ -413,7 +432,7 @@
                         <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
                         <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
                     </div>
-                    <div class="right item">
+                    <div class="right item" style="align-items:center;">
                         <!-- <div class="item">
                             <div class="ui action left icon input">
                               <i class="search icon"></i>
@@ -427,8 +446,20 @@
                                 <i class="bell icon brown"></i>
                             </a>
                         </div>
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Log in</a>
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Sign Up</a>
+                        {% if is_authenticated %}
+                        <div class="ui dropdown item" style="padding: 0.5em;padding-bottom:0.7em;font-family: 'Itim', cursive;font-size:20px;">
+                            Hello, {{user.username}} !
+                            <div class="menu">
+                                <div class="header">{{user.email}}</div>
+                                <div class="ui divider attached"></div>
+                                <a class="item" hred="">Change Information</a>
+                                <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/log-in">Log in</a>
+                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/sign-up">Sign Up</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -654,6 +685,25 @@
     setInterval(updateTime, 1000);
 
     updateTime();
+
+</script>
+<script>
+document.querySelectorAll(".logout-link").forEach(function(logoutLink) {
+    logoutLink.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        fetch("/accounts/log-out/", {
+            method: 'POST',  
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        }).then(response => {
+            window.location.reload();
+        }).catch(error => {
+            console.error("Error logging out:", error);
+        });
+    });
+});
 
 </script>
 {% endblock %}
