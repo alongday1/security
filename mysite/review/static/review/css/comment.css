@@ -157,7 +157,7 @@
 }
 
 .tag-button.selected {
-  background-color: #f2562e;
+  background-color: rgba(251,189,8,1);
   color: white;
 }
 
@@ -174,7 +174,7 @@
 }
 
 .tag-button-lg.selected {
-  background-color: #f2562e;
+  background-color: rgba(251,189,8,1);
   color: white;
 }
 
