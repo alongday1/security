@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log("服务器响应:", data);
-                alert("菜品信息修改成功！");
+                alert(data.message);
             })
             .catch(error => {
                 console.error("请求发生错误:", error);
