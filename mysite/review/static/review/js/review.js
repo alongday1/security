@@ -1,8 +1,3 @@
-function test()
-{
-    alert("test");
-}
-
 // 切换选中状态
 function toggleSelect(link) {
     const restaurantLinks = document.querySelectorAll('.restaurant-link');
@@ -18,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() { // 确保在 DOM 文�
     restaurantLinks.forEach(function(link) {
         link.addEventListener('click', function(e) { // 为每个链接添加点击事件
             e.preventDefault(); // 阻止默认的点击事件，防止页面跳转或刷新
+            toggleSelect(link);
             submitSearch();
         });
     });
@@ -104,7 +100,7 @@ function submitSearch()
                 let rating_str='';
                 console.log('main_image', dish.image);
                 if (dish.rating != null)
-                    rating_str=`评分：${dish.rating}`;
+                    rating_str=`评分：${dish.rating.toFixed(1)}`;
                 else rating_str="暂无评分";
                 dishHtml += `
                     <div class="dish-container row"
@@ -116,7 +112,7 @@ function submitSearch()
                             <div style="font-size: 25px; font-weight:bold;margin-bottom: 5px;">${dish.name}</div>
                             <div>
                                 <span class="rating_show">${rating_str}</span>
-                                <span class="count_show">${dish.count_comment}人评价   人收藏</span>
+                                <span class="count_show">${dish.count_comment}条评价</span>
                             </div>
                             <div>
                                 <span>地点：${dish.canteen}</span>
