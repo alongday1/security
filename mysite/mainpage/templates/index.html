@@ -330,7 +330,7 @@
                 Forum
                 <i class="dropdown icon"></i>
                 <div class="menu" style="background-color:#ffde7d ;">
-                    <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
+                    <a class="item" href="{% url 'forum_post_default' %}">Post</a>
                     <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
                 </div>
             </div>
@@ -343,7 +343,7 @@
                     <div class="menu" style="background-color:#ffde7d ;">
                         <div class="header">{{user.email}}</div>
                         <div class="ui divider attached"></div>
-                        <a class="item" hred="">Change Information</a>
+                        <a class="item" href="">Change Information</a>
                         <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
                     </div>
                 </div>
@@ -425,7 +425,7 @@
                             Forum
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
+                                <a class="item" href="{% url 'forum_post_default' %}">Post</a>
                                 <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
                             </div>
                         </div>
@@ -452,7 +452,7 @@
                             <div class="menu">
                                 <div class="header">{{user.email}}</div>
                                 <div class="ui divider attached"></div>
-                                <a class="item" hred="">Change Information</a>
+                                <a class="item" href="">Change Information</a>
                                 <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
                             </div>
                         </div>

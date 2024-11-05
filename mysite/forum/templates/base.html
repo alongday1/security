@@ -259,7 +259,7 @@
                 Forum
                 <i class="dropdown icon"></i>
                 <div class="menu" style="background-color:#ffde7d ;">
-                    <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
+                    <a class="item" href="{% url 'forum_post_default' %}">Post</a>
                     <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
                 </div>
             </div>            <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
@@ -272,7 +272,7 @@
                     <div class="menu" style="background-color:#ffde7d ;">
                         <div class="header">{{user.email}}</div>
                         <div class="ui divider attached"></div>
-                        <a class="item" hred="">Change Information</a>
+                        <a class="item" href="">Change Information</a>
                         <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
                     </div>
                 </div>
@@ -304,7 +304,7 @@
         <div class="ui item header" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}background-color:#f2d176;{% endif %}">
             Forum
         </div>  
-        <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href="{% url 'forum_post' 1 %}">&emsp;Post</a>
+        <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href="{% url 'forum_post_default' %}">&emsp;Post</a>
         <a class="item" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href="{% url 'group_post_list' %}">&emsp;Group Post</a>
         <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
         <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
@@ -338,12 +338,12 @@
                             Mealmate
                         </div>
                         <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-                        <!-- <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a> -->
+                        <!-- <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_post_default' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a> -->
                         <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}color:#ffb61e;{% endif %}">
                             Forum
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
+                                <a class="item" href="{% url 'forum_post_default' %}">Post</a>
                                 <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
                             </div>
                         </div>
@@ -370,7 +370,7 @@
                             <div class="menu">
                                 <div class="header">{{user.email}}</div>
                                 <div class="ui divider attached"></div>
-                                <a class="item" hred="">Change Information</a>
+                                <a class="item" href="">Change Information</a>
                                 <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
                             </div>
                         </div>

@@ -79,7 +79,7 @@
                     <!-- end error_message -->
                     <div style="text-align:center ;">
                         <div class="ui divider hidden "></div>
-                        <button class="ui basic button large brown" onclick="window.location.href='{% url 'forum_post' 1 %}'">Back to Forum</button>
+                        <button class="ui basic button large brown" onclick="window.location.href='{% url 'forum_post_default' %}'">Back to Forum</button>
                         <button class="ui basic brown large button" type= "submit">Save</button>
                     </div>
                 </div>
@@ -132,7 +132,7 @@ $(document)
             contentType: false,
             success: function (response) {
                 if (response.status === 'success') {
-                    window.location.href = "{% url 'forum_post' 1 %}";
+                    window.location.href = "{% url 'forum_post_default' %}";
                 } else {
                     $('.ui.error.message').removeClass('hidden').addClass('visible').find('p').text(response.message);
                     $('#multi-select').dropdown('set selected', selectedTags); 

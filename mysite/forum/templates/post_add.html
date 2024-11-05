@@ -171,7 +171,7 @@
             </form>
             <div class="selected_hidden" style="text-align: center;">
                 <div class="ui divider hidden "></div>
-                <button class="ui basic button brown selected_hidden" onclick="window.location.href='{% url 'forum_post' 1 %}'">Back to Forum</button>
+                <button class="ui basic button brown selected_hidden" onclick="window.location.href='{% url 'forum_post_default' %}'">Back to Forum</button>
             </div>
         </div>  
     </div>
@@ -218,7 +218,7 @@ $(document)
             contentType: false,
             success: function (response) {
                 if (response.status === 'success') {
-                    window.location.href = "{% url 'forum_post' 1 %}";
+                    window.location.href = "{% url 'forum_post_default' %}";
                 } else {
                     $('.ui.error.message').removeClass('hidden').addClass('visible').find('p').text(response.message);
                     $('#multi-select').dropdown('set selected', selectedTags); 

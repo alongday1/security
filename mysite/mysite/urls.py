@@ -45,9 +45,9 @@ urlpatterns = [
 
     path('', home_view, name='home'),
     path('record/', include('meals.urls')),
-    path('forum/', forum_home_view, name='forum_home'),
     path('forum/post/create/', post_create_view, name='post_create'),
     path('forum/<int:forum_id>/', forum_post_view, name='forum_post'),
+    path('forum/', forum_post_view, name='forum_post_default'),
     path('forum/group/', group_post_view, name='group_post_list'),
     path('forum/post/<uuid:uuid>/', post_detail, name='post_detail'),
     path('forum/group_post/<uuid:uuid>/', group_detail, name='group_detail'),
