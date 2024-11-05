@@ -469,7 +469,7 @@
 						</div>
 					</div>
 
-					<ul class="mw-md mx-auto">
+					<div class="mw-md mx-auto">
 <!--						该类来实现页面元素居中并限制其最大宽度-->
 						<div id="comments-page">
 							<ul class="list-unstyled mb-4">
@@ -502,32 +502,7 @@
 												</ul>
 											</div>
 										</li>
-
 									</ul>
-
-
-	<!--								<ul class="topic list-unstyled row mx-0 justify-content-between align-items-center">-->
-	<!--									<li class="col-sm-2">-->
-	<!--										{% for image in comment.images.all %}-->
-	<!--											<a href="#"><img src="{{ image.image.url }}" alt="comment image"></a>-->
-	<!--										{% endfor %}-->
-	<!--									</li>-->
-	<!--									<li class="entry mb-0 col-sm-9">-->
-	<!--										<div class="mb-0" style="font-size: 18px;">{{ comment.content|safe }}</div>-->
-	<!--										<div class="entry-meta mt-1">-->
-	<!--											<ul>-->
-	<!--												<li style="color:darkgray !important;">{{ comment.datetime|date:"Y-m-d H:i" }}</li>-->
-	<!--												<li style="color:darkgray !important;">4 likes</li>-->
-	<!--												<li style="color:darkgray !important;">2 unlikes</li>-->
-	<!--											</ul>-->
-	<!--										</div>-->
-	<!--									</li>-->
-	<!--									<li class="col-sm-1">-->
-	<!--										<div class="bbp-author">-->
-	<!--											<a href="#"><img alt="User" src="{% static 'review/img/comment_images/user1.jpg' %}"></a>-->
-	<!--										</div>-->
-	<!--									</li>-->
-	<!--								</ul>-->
 									{% endfor %}
 								</li>
 							</ul>
