@@ -93,13 +93,13 @@ EMAIL_HOST_USER = "test@example.com"
 DEFAULT_FROM_EMAIL = "test@example.com"
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "my_test",
-        "USER": "root",
-        "PASSWORD": "spring2004",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'MealMate',  # 你的数据库名称
+        'USER': 'admin',           # 数据库用户名
+        'PASSWORD': 'Admin111!',   # 数据库密码
+        'HOST': 'localhost',        # 数据库服务器地址，通常为 'localhost' 或远程服务器的 IP
+        'PORT': '3306',                # MySQL 的默认端口号
     }
 }
 

@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('images', images);
-
     document.getElementById('file-input').addEventListener('change', function(event) {
         const files = event.target.files;
         const allowedTypes = ['image/png', 'image/jpeg'];
@@ -39,72 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('图片上传成功:', files);
     });
 
-    // 为菜品点赞绑定点击函数
-    var like_link = document.getElementById('add_dish_like');
-        like_link.addEventListener('click', function(e) {
-            e.preventDefault(); // 阻止默认的点击事件，防止页面跳转或刷新
-            if (like_link.classList.contains('clicked')){
-                like_link.classList.remove('clicked');
-                updateLike(-1, 0);
-            }
-            else if (unlike_link.classList.contains('clicked')){
-                unlike_link.classList.remove('clicked');
-                like_link.classList.add('clicked');
-                updateLike(1, -1);
-            }
-            else {
-                like_link.classList.add('clicked');
-                updateLike(1, 0);
-            }
-
-        });
-
-    // 为菜品点踩绑定点击函数
-    var unlike_link = document.getElementById('add_dish_unlike');
-        unlike_link.addEventListener('click', function(e) {
-            e.preventDefault(); // 阻止默认的点击事件，防止页面跳转或刷新
-            if (unlike_link.classList.contains('clicked')){
-                unlike_link.classList.remove('clicked');
-                updateLike(0, -1);
-            }
-            else if (like_link.classList.contains('clicked')){
-                like_link.classList.remove('clicked');
-                unlike_link.classList.add('clicked');
-                updateLike(-1, 1);
-            }
-            else {
-                unlike_link.classList.add('clicked');
-                updateLike(0, 1);
-            }
-        });
-
     init_chart();
 });
-
-function updateLike(like, unlike) {
-    // 构建请求参数
-    const params = new URLSearchParams({
-        dish_id: dish_id,
-        like: like,
-        unlike: unlike,
-    });
-
-    fetch(`${updateLikes}?${params.toString()}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('网络响应不成功');
-            }
-            return response.json(); // 转换为JSON
-        })
-        .then(data => {
-            document.getElementById('like_display').innerHTML = data.count_like;
-            document.getElementById('unlike_display').innerHTML = data.count_unlike;
-        })
-        .catch(error => {
-            document.getElementById('like_display').innerHTML = '<p>无法加载菜品，请稍后重试。</p>';
-            console.error('Error updating likes:', error);
-        });
-}
 
 
 // 星级评分
@@ -265,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 console.log("服务器响应:", data);
-                alert("菜品信息修改成功！");
+                alert(data.message);
             })
             .catch(error => {
                 console.error("请求发生错误:", error);
@@ -409,26 +343,29 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             // 处理服务器响应
             console.log("服务器响应:", data);
-            alert("图片添加成功！");
-            Modal = bootstrap.Modal.getInstance(document.getElementById("modal-addimage"));
-            if (Modal) {
-                Modal.hide();
-
-                images = data.updated_images;
-                console.log("updated images", images);
-                container = document.getElementById("image-container");
-                container.innerHTML = images.map((image_url, index) => `
-                    ${(index % 4 === 0) ? `<div class="carousel-item ${(index === 0) ? 'active' : ''}"><div class="row text-center">` : ''}
-                        <div class="col-md-3">
-                            <img src="${image_url}" alt="Image ${index + 1}" class="d-block w-100" style="height: 250px; width: 300px; object-fit: cover;">
-                        </div>
-                    ${(index % 4 === 3 || index === images.length - 1) ? `</div></div>` : ''}
-                `).join('');
-//                if (old_length == 0)
-//                {
-//                    document.getElementById('link-noimage').classList.add('hidden');
-//                    document.getElementById('link-addimage').classList.remove('hidden');
-//                }
+            alert(data.message);
+            if (data.success)
+            {
+                Modal = bootstrap.Modal.getInstance(document.getElementById("modal-addimage"));
+                if (Modal) {
+                    Modal.hide();
+                    old_length = images.length;
+                    images = data.updated_images;
+                    console.log("updated images", images);
+                    container = document.getElementById("image-container");
+                    container.innerHTML = images.map((image_url, index) => `
+                        ${(index % 4 === 0) ? `<div class="carousel-item ${(index === 0) ? 'active' : ''}"><div class="row text-center">` : ''}
+                            <div class="col-md-3">
+                                <img src="${image_url}" alt="Image ${index + 1}" class="d-block w-100" style="height: 250px; width: 300px; object-fit: cover;">
+                            </div>
+                        ${(index % 4 === 3 || index === images.length - 1) ? `</div></div>` : ''}
+                    `).join('');
+                    if (old_length == 0)
+                    {
+                        document.getElementById('link-noimage').classList.add('hidden');
+                        document.getElementById('link-addimage').classList.remove('hidden');
+                    }
+                }
             }
         })
         .catch(error => {
@@ -444,6 +381,7 @@ document.addEventListener("DOMContentLoaded", function() {
     show_mine.addEventListener('click', function(e) {
         e.preventDefault();
         show_mine.classList.toggle("selected");
+        search_comments();
     });
 
     submit_search = document.getElementById('submit-search');
@@ -489,5 +427,3 @@ function search_comments() {
         alert("搜索出现错误，请重试！");
     });
 }
-
-

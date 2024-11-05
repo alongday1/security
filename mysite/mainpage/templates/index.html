@@ -325,9 +325,9 @@
                 Mealmate
             </div>
             <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-            <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
+            <a class="item {% if active_link == 'forum_post_default' %}active{% endif %}" href="{% url 'forum_post_default' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
             <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
-            <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
+            <a class="item {% if active_link == 'review' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
             <div class="right menu">
                 <div class="item">
                     <a class="ui basic button" href= "/accounts/log-in">Log in</a>
@@ -400,18 +400,18 @@
                             Mealmate
                         </div>
                         <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-                        <!-- <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a> -->
+
                         <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}color:#ffb61e;{% endif %}">
                             Forum
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <a class="item" href="{% url 'forum_home' %}">Summary</a>
+                                <a class="item" href="{% url 'forum_post_default' %}">Summary</a>
                                 <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
                                 <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
                             </div>
                         </div>
                         <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
-                        <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
+                        <a class="item {% if active_link == 'review' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
                     </div>
                     <div class="right item">
                         <!-- <div class="item">

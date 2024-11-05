@@ -22,8 +22,15 @@
                     </div>
                 </div>
                 <div class="ui hidden divider"></div>
+                <a class="item" href="{% url 'group_post_list' %}">
+                    <i class="glass cheers large icon" style="margin-right: 12px;"></i>
+                    <span>
+                    食伴聚会
+                    </span>
+                </a>
+                <div class="ui inverted fitted divider"></div>
                 {% for forum in forums %}
-                <a class="item " href="{% url 'forum_post' forum.id %}">
+                <a class="item {% if forum.id == selected_forum_id %}active{% endif %}" href="{% url 'forum_post' forum.id %}">
                     {% if forum.icon %}
                     <img class="ui avatar image" src="{{ forum.icon.url }}" alt="{{ forum.name }}"
                         style="margin-right: 12px;" />
@@ -33,12 +40,7 @@
                     <a />
                     {% endfor %}
                     <div class="ui inverted fitted divider"></div>
-                    <a class="item active" href="{% url 'group_post_list' %}">
-                        <i class="glass cheers large icon" style="margin-right: 12px;"></i>
-                        <span>
-                        食伴聚会
-                        </span>
-                    </a>
+                    <a class="item" href="{% url 'forum_post_default' %}" style="text-align:center ;color:brown">See All</a>
             </div>
         </div>
         <div class="eight wide column">
@@ -49,6 +51,14 @@
                         <div class="header">{{ message }}</div>
                     </div>
                 {% endfor %}
+            {% endif %}
+            {% if tag_name != NULL %}
+            <div class="ui center aligned message">
+                  <i class="close icon tagged"></i>
+                  <div class="header">
+                      Seach Tag Result: {{tag_name}}
+                  </div>
+            </div>
             {% endif %}
             {% if group_posts.paginator.count == 0 %}
                 <div class="ui center aligned brown message transition">
@@ -318,6 +328,15 @@ function updateChart1(){
         } ]
     };
     chart1.setOption(option);
+
+    chart1.on('click', function (params) {
+        if (params && params.data) {
+            var tagName = params.data.name;
+            var currentUrl = window.location.pathname;
+            window.location.href = currentUrl+'?tag=' + encodeURIComponent(tagName);
+        }
+    });
+
     window.onresize = chart.resize;
 
 }
@@ -326,5 +345,17 @@ updateChart1();
 
 window.addEventListener('resize', updateChart1);
 
+</script>
+<script>
+    document.querySelector('.close.icon.tagged').addEventListener('click', function() {
+        let currentUrl = window.location.href;
+        let newUrl = currentUrl.replace(/([?&])tag=[^&]*/, ''); 
+
+        if (newUrl.endsWith('?') || newUrl.endsWith('&')) {
+            newUrl = newUrl.slice(0, -1); 
+        }
+        
+        window.location.href = newUrl;
+    });
 </script>
 {% endblock %}

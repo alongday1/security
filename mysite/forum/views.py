@@ -53,11 +53,24 @@ def forum_home_view(request):
     posts = Post.objects.order_by('-click')[:5]
     return render(request,'forum.html', {'is_authenticated':is_authenticated,'active_link': 'forum_home','canteen_data': canteen_data,'group_posts': group_posts,'posts':posts,'message_reminder_visible': message_reminder_visible,})
 
-def forum_post_view(request, forum_id):
+def forum_post_view(request, forum_id=0):
+    tag_name = request.GET.get('tag', None)
     message_reminder_visible,is_authenticated = base_view(request)
     forums = Forum.objects.all()
-    forum_target = get_object_or_404(Forum, id=forum_id)
-    posts = Post.objects.filter(forum=forum_target).order_by('-last_modified')
+    if forum_id == 0:
+        forum_target = None
+        selected_forum_id = None
+        if tag_name:
+            posts = Post.objects.filter(tag__name=tag_name).order_by('-last_modified')
+        else:
+            posts = Post.objects.all().order_by('-last_modified')
+    else:
+        forum_target = get_object_or_404(Forum, id=forum_id)
+        selected_forum_id = forum_target.id
+        if tag_name:
+            posts = Post.objects.filter(forum=forum_target, tag__name=tag_name).order_by('-last_modified')
+        else:
+            posts = Post.objects.filter(forum=forum_target).order_by('-last_modified')
     
     paginator = Paginator(posts, 8)
     page_number = request.GET.get('page')
@@ -66,7 +79,7 @@ def forum_post_view(request, forum_id):
     tag_counts = Tag.objects.annotate(post_count=Count('post')).values('name', 'post_count')
     tag_count = [{'name': tag['name'], 'value': tag['post_count']} for tag in tag_counts]
 
-    return render(request,'forum_post.html',{'is_authenticated':is_authenticated,'tag_count':tag_count,'active_link': 'forum_home','forums':forums,'posts':page_obj,'selected_forum_id': forum_target.id,'forum_target':forum_target,'message_reminder_visible': message_reminder_visible,})
+    return render(request,'forum_post.html',{'is_authenticated':is_authenticated,'tag_count':tag_count,'active_link': 'forum_home','forums':forums,'posts':page_obj,'selected_forum_id': selected_forum_id,'forum_target':forum_target,'message_reminder_visible': message_reminder_visible,'tag_name':tag_name,})
 
 def group_post_view(request):
     message_reminder_visible,is_authenticated = base_view(request)
