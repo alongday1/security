@@ -1,8 +1,3 @@
-function test()
-{
-    alert("test");
-}
-
 // 切换选中状态
 function toggleSelect(link) {
     const restaurantLinks = document.querySelectorAll('.restaurant-link');
@@ -18,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() { // 确保在 DOM 文�
     restaurantLinks.forEach(function(link) {
         link.addEventListener('click', function(e) { // 为每个链接添加点击事件
             e.preventDefault(); // 阻止默认的点击事件，防止页面跳转或刷新
+            toggleSelect(link);
             submitSearch();
         });
     });
@@ -104,7 +100,7 @@ function submitSearch()
                 let rating_str='';
                 console.log('main_image', dish.image);
                 if (dish.rating != null)
-                    rating_str=`评分：${dish.rating}`;
+                    rating_str=`评分：${dish.rating.toFixed(1)}`;
                 else rating_str="暂无评分";
                 dishHtml += `
                     <div class="dish-container row"
@@ -116,7 +112,7 @@ function submitSearch()
                             <div style="font-size: 25px; font-weight:bold;margin-bottom: 5px;">${dish.name}</div>
                             <div>
                                 <span class="rating_show">${rating_str}</span>
-                                <span class="count_show">${dish.count_comment}人评价   人收藏</span>
+                                <span class="count_show">${dish.count_comment}条评价</span>
                             </div>
                             <div>
                                 <span>地点：${dish.canteen}</span>
@@ -185,30 +181,6 @@ function toggleInclude(tag)
 }
 
 
-//// DOM 内容加载后执行
-//document.addEventListener('DOMContentLoaded', function() {
-//    // 获取确认添加标签按钮
-//    var confirmAddTagButton = document.getElementById('confirm-add-tag');
-//    // 绑定点击事件
-//    confirmAddTagButton.addEventListener('click', function() {
-//        // 获取输入的标签
-//        var newTagInput = document.getElementById('new-tag');
-//        var newTag = newTagInput.value;
-//
-//        if (newTag) {
-//            console.log('添加标签:', newTag);
-//            // 清空输入框
-//            newTagInput.value = '';
-//            // 隐藏模态窗口
-//            var tagModal = new bootstrap.Modal(document.getElementById('tagModal'));
-//            tagModal.hide();
-//        } else {
-//            alert('请输入标签名称！');
-//        }
-//    });
-//});
-
-
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("tagForm").onsubmit = function(event) {
         event.preventDefault();
@@ -230,17 +202,13 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             // 处理服务器响应
             console.log("服务器响应:", data);
-            alert("标签已成功添加！");
-
-            const tagModal = bootstrap.Modal.getInstance(document.getElementById("tagModal"));
-            if (tagModal) {
-                tagModal.hide();
-                //document.querySelector('.modal-backdrop').remove();
-            }
+            if (data.success == true)
+                alert("标签已成功添加！");
+            else alert(data.error);
         })
         .catch(error => {
             console.error("请求发生错误:", error);
-            alert("添加失败，该标签已存在！");
+            alert(error);
         });
     };
 });
@@ -285,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             // 处理服务器响应
             console.log("服务器响应:", data);
-            alert("菜品已成功添加！");
+            alert(data.message);
 //            const dishModal = bootstrap.Modal.getInstance(document.getElementById("dishModal"));
 //            if (dishModal) {
 //                dishModal.hide();
@@ -298,7 +266,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 });
-
-
-
-

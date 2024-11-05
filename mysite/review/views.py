@@ -44,6 +44,8 @@ def add_tag(request):
     if request.method == 'POST':
         new_tag_name = request.POST.get('new-tag')
         print("new-tag", new_tag_name)
+        if (request.user.is_authenticated == False):
+            return JsonResponse({'success': False, 'error': "请先登录！"})
         try:
             new_tag = Tag.objects.create(name=new_tag_name, type=0)
             new_tag.save()
@@ -56,6 +58,9 @@ def add_tag(request):
 
 def add_dish(request):
     if request.method == "POST":
+        if request.user.is_authenticated == False:
+            return JsonResponse({'message': "请先登录！"})
+
         dish_name = request.POST.get('dishName')
         canteen = request.POST.get('canteen')
         description = request.POST.get('description')
@@ -96,7 +101,7 @@ def add_dish(request):
         else:
             print(f"Failed to save image {filename}.")
 
-        return JsonResponse({"message": "菜品添加成功"})
+        return JsonResponse({"message": "菜品添加成功！"})
     return JsonResponse({"error": "请求方法错误"}, status=400)
 
 
@@ -196,8 +201,10 @@ def comments(request):
         main_image = ''
     images = [image.image.url for image in dish.images.filter(is_main=False)]  # 获取每个非代表图的dishImage的URL
 
+    count_rating = 0
     # 更新对应Dish的评分
     if dish.ratings.exists():
+        count_rating = dish.ratings.count()
         average_rating = dish.ratings.aggregate(Avg('value'))['value__avg']
         # 将平均值保留一位小数
         if average_rating is not None:
@@ -225,11 +232,12 @@ def comments(request):
         page_obj = paginator.page(1)  # 如果请求页码不是整数，返回第一页
 
     value = ''
-    try:
-        current_rating = Rating.objects.get(user=request.user, dish=dish)
-        value = str(current_rating.value)
-    except Rating.DoesNotExist:
-        value = ''
+    if request.user.is_authenticated:
+        try:
+            current_rating = Rating.objects.get(user=request.user, dish=dish)
+            value = str(current_rating.value)
+        except Rating.DoesNotExist:
+            value = ''
 
     return render(
         request, 'comment.html', {
@@ -239,8 +247,8 @@ def comments(request):
             'dish_description': dish.description,
             'main_image': main_image,
             'images': images,
-            'count_like': dish.count_like,
-            'count_unlike': dish.count_unlike,
+            'count_rating': count_rating,
+            'count_comment': dish.count_comment,
             'avg_rating': dish.rating,
             'current_rating': value,
             'rating_list': json.dumps([rating.value for rating in dish.ratings.all()]),
@@ -411,22 +419,7 @@ def submit_rating(request, dish_id):
     return HttpResponseRedirect(referer_url)
 
 
-def update_like(request):
-    dish_id = int(request.GET.get('dish_id'))
-    dish = Dish.objects.get(id=dish_id)
-    like = int(request.GET.get('like'))
-    unlike = int(request.GET.get('unlike'))
-    print('old like:', dish.count_like, 'old unlike:', dish.count_unlike, 'like:', like, 'unlike:', unlike)
-    dish.count_like = dish.count_like + like
-    dish.count_unlike = dish.count_unlike + unlike
-    dish.save()
-
-    return JsonResponse({
-        'count_like': dish.count_like,
-        'count_unlike': dish.count_unlike,
-    })
-
-
+@login_required
 def update_dish_info(request):
     if request.method == 'POST':
         try:
@@ -448,6 +441,7 @@ def update_dish_info(request):
     return JsonResponse({"error": "请求方法错误"}, status=400)
 
 
+@login_required
 def add_image(request):
     if request.method == "POST":
         dish_id = int(request.POST.get('dish_id'))
