@@ -181,30 +181,6 @@ function toggleInclude(tag)
 }
 
 
-//// DOM 内容加载后执行
-//document.addEventListener('DOMContentLoaded', function() {
-//    // 获取确认添加标签按钮
-//    var confirmAddTagButton = document.getElementById('confirm-add-tag');
-//    // 绑定点击事件
-//    confirmAddTagButton.addEventListener('click', function() {
-//        // 获取输入的标签
-//        var newTagInput = document.getElementById('new-tag');
-//        var newTag = newTagInput.value;
-//
-//        if (newTag) {
-//            console.log('添加标签:', newTag);
-//            // 清空输入框
-//            newTagInput.value = '';
-//            // 隐藏模态窗口
-//            var tagModal = new bootstrap.Modal(document.getElementById('tagModal'));
-//            tagModal.hide();
-//        } else {
-//            alert('请输入标签名称！');
-//        }
-//    });
-//});
-
-
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("tagForm").onsubmit = function(event) {
         event.preventDefault();
@@ -227,12 +203,6 @@ document.addEventListener("DOMContentLoaded", function() {
             // 处理服务器响应
             console.log("服务器响应:", data);
             alert("标签已成功添加！");
-
-            const tagModal = bootstrap.Modal.getInstance(document.getElementById("tagModal"));
-            if (tagModal) {
-                tagModal.hide();
-                //document.querySelector('.modal-backdrop').remove();
-            }
         })
         .catch(error => {
             console.error("请求发生错误:", error);
