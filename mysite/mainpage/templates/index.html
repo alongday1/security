@@ -324,16 +324,16 @@
                 <img class="ui image" src="{% static 'img/icon/baozi.png' %}" alt="icon" style="margin-right: 12px;height: 33px;" />
                 Mealmate
             </div>
-            <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
+            <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
             <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
             <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
-            <a class="item {% if active_link == '111' %}active{% endif %}" href="#" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Careers</a>
+            <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
             <div class="right menu">
                 <div class="item">
-                    <a class="ui basic button">Log in</a>
+                    <a class="ui basic button" href= "/accounts/log-in">Log in</a>
                 </div>
                 <div class="item">
-                    <a class="ui basic button">Sign Up</a>
+                    <a class="ui basic button" href= "/accounts/sign-up">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -483,7 +483,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block">
-						<h1 class="heading"><span>Dishes</span> on <span>Display</span></h1>
+						<h1 class="heading"><span>Dishes </span> on <span> Display</span></h1>
 						<ul>
 							{% for dish in dishes  %}
 							<a href="review/comments/?dish_id={{dish.id}}">
@@ -662,53 +662,17 @@
 
 
     <div class="pusher">
-
-
-
-
-        <div class="ui vertical footer segment" style="border-top: 5px;background-color:#ffde7d">
+        <div class="ui vertical footer segment" style="padding:20px; border-top: 5px;background-color:#ffde7d">
             <div class="ui center aligned container">
-                <div class="ui stackable divided grid">
-                  <div class="three wide column">
-                    <h4 class="ui header">Group 1</h4>
-                    <div class="ui link list">
-                      <a href="#" class="item">Link One</a>
-                      <a href="#" class="item">Link Two</a>
-                      <a href="#" class="item">Link Three</a>
-                      <a href="#" class="item">Link Four</a>
-                    </div>
-                  </div>
-                  <div class="three wide column">
-                    <h4 class="ui header">Group 2</h4>
-                    <div class="ui link list">
-                      <a href="#" class="item">Link One</a>
-                      <a href="#" class="item">Link Two</a>
-                      <a href="#" class="item">Link Three</a>
-                      <a href="#" class="item">Link Four</a>
-                    </div>
-                  </div>
-                  <div class="three wide column">
-                    <h4 class="ui header">Group 3</h4>
-                    <div class="ui link list">
-                      <a href="#" class="item">Link One</a>
-                      <a href="#" class="item">Link Two</a>
-                      <a href="#" class="item">Link Three</a>
-                      <a href="#" class="item">Link Four</a>
-                    </div>
-                  </div>
-                  <div class="seven wide column">
-                    <h4 class="ui header">Footer Header</h4>
-                    <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
-                  </div>
-                </div>
-                <div class="ui section divider" style="color:#ffde7d;"></div>
+                <!--<div class="ui section divider" style="color:#ffde7d;"></div>-->
                 <img src="{% static 'img/avatar/cat1.png' %}" class="ui centered mini image">
-                <div class="ui horizontal small divided link list">
-                  <a class="item" href="#">Site Map</a>
+                <div class="ui horizontal small divided link list">Copyright © NIS3368-2024-A-Team6</div>
+                <!--<div class="ui horizontal small divided link list">
+                  <a class="item" href="/test_mp">Site Map</a>
                   <a class="item" href="#">Contact Us</a>
                   <a class="item" href="#">Terms and Conditions</a>
                   <a class="item" href="#">Privacy Policy</a>
-                </div>
+                </div>-->
               </div>
         </div>
     </div>
