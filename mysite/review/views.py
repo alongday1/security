@@ -40,11 +40,12 @@ def review(request):
     })
 
 
-@login_required
 def add_tag(request):
     if request.method == 'POST':
         new_tag_name = request.POST.get('new-tag')
         print("new-tag", new_tag_name)
+        if (request.user.is_authenticated == False):
+            return JsonResponse({'success': False, 'error': "请先登录！"})
         try:
             new_tag = Tag.objects.create(name=new_tag_name, type=0)
             new_tag.save()
@@ -55,9 +56,11 @@ def add_tag(request):
     return JsonResponse({'success': False, 'error': "无效的请求！"})  # 处理无效请求
 
 
-@login_required
 def add_dish(request):
     if request.method == "POST":
+        if request.user.is_authenticated == False:
+            return JsonResponse({'message': "请先登录！"})
+
         dish_name = request.POST.get('dishName')
         canteen = request.POST.get('canteen')
         description = request.POST.get('description')
@@ -98,7 +101,7 @@ def add_dish(request):
         else:
             print(f"Failed to save image {filename}.")
 
-        return JsonResponse({"message": "菜品添加成功"})
+        return JsonResponse({"message": "菜品添加成功！"})
     return JsonResponse({"error": "请求方法错误"}, status=400)
 
 
