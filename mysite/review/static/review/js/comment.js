@@ -343,25 +343,28 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             // 处理服务器响应
             console.log("服务器响应:", data);
-            alert("图片添加成功！");
-            Modal = bootstrap.Modal.getInstance(document.getElementById("modal-addimage"));
-            if (Modal) {
-                Modal.hide();
-                old_length = images.length;
-                images = data.updated_images;
-                console.log("updated images", images);
-                container = document.getElementById("image-container");
-                container.innerHTML = images.map((image_url, index) => `
-                    ${(index % 4 === 0) ? `<div class="carousel-item ${(index === 0) ? 'active' : ''}"><div class="row text-center">` : ''}
-                        <div class="col-md-3">
-                            <img src="${image_url}" alt="Image ${index + 1}" class="d-block w-100" style="height: 250px; width: 300px; object-fit: cover;">
-                        </div>
-                    ${(index % 4 === 3 || index === images.length - 1) ? `</div></div>` : ''}
-                `).join('');
-                if (old_length == 0)
-                {
-                    document.getElementById('link-noimage').classList.add('hidden');
-                    document.getElementById('link-addimage').classList.remove('hidden');
+            alert(data.message);
+            if (data.success)
+            {
+                Modal = bootstrap.Modal.getInstance(document.getElementById("modal-addimage"));
+                if (Modal) {
+                    Modal.hide();
+                    old_length = images.length;
+                    images = data.updated_images;
+                    console.log("updated images", images);
+                    container = document.getElementById("image-container");
+                    container.innerHTML = images.map((image_url, index) => `
+                        ${(index % 4 === 0) ? `<div class="carousel-item ${(index === 0) ? 'active' : ''}"><div class="row text-center">` : ''}
+                            <div class="col-md-3">
+                                <img src="${image_url}" alt="Image ${index + 1}" class="d-block w-100" style="height: 250px; width: 300px; object-fit: cover;">
+                            </div>
+                        ${(index % 4 === 3 || index === images.length - 1) ? `</div></div>` : ''}
+                    `).join('');
+                    if (old_length == 0)
+                    {
+                        document.getElementById('link-noimage').classList.add('hidden');
+                        document.getElementById('link-addimage').classList.remove('hidden');
+                    }
                 }
             }
         })
