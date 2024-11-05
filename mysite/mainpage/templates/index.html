@@ -318,43 +318,23 @@
 		<img class="img-responsive" src="/header.jpg" alt="">
 	</section>
 	-->
-    
 	    <div class="ui large top fixed hidden menu" style="background-color:#ffde7d ;">
         <div class="ui container">
             <div class="item" style="font-family: 'PermanentMarker', cursive;font-size:26px;padding: 0.5em;">
                 <img class="ui image" src="{% static 'img/icon/baozi.png' %}" alt="icon" style="margin-right: 12px;height: 33px;" />
                 Mealmate
             </div>
-            <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-            <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}background-color:#f2d176;{% endif %}">
-                Forum
-                <i class="dropdown icon"></i>
-                <div class="menu" style="background-color:#ffde7d ;">
-                    <a class="item" href="{% url 'forum_post_default' %}">Post</a>
-                    <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
-                </div>
-            </div>
+            <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
+            <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a>
             <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
             <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
             <div class="right menu">
-                {% if is_authenticated %}
-                <div class="ui dropdown item" style="padding: 0.5em;padding-bottom:0.7em;font-family: 'Itim', cursive;font-size:20px;">
-                    Hello, {{user.username}} !
-                    <div class="menu" style="background-color:#ffde7d ;">
-                        <div class="header">{{user.email}}</div>
-                        <div class="ui divider attached"></div>
-                        <a class="item" href="">Change Information</a>
-                        <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
-                    </div>
-                </div>
-                {% else %}
                 <div class="item">
                     <a class="ui basic button" href= "/accounts/log-in">Log in</a>
                 </div>
                 <div class="item">
                     <a class="ui basic button" href= "/accounts/sign-up">Sign Up</a>
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -420,19 +400,20 @@
                             Mealmate
                         </div>
                         <a class="item {% if active_link == 'home' %}active{% endif %}" href="{% url 'main_page' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Home</a>
-                        <!-- <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_post_default' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a> -->
+                        <!-- <a class="item {% if active_link == 'forum_home' %}active{% endif %}" href="{% url 'forum_home' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Forum</a> -->
                         <div class="ui dropdown item" style="padding: 0.6em;padding-bottom:0.65em;font-family: 'Itim', cursive;font-size:20px;{% if active_link == 'forum_home' %}color:#ffb61e;{% endif %}">
                             Forum
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <a class="item" href="{% url 'forum_post_default' %}">Post</a>
+                                <a class="item" href="{% url 'forum_home' %}">Summary</a>
+                                <a class="item" href="{% url 'forum_post' 1 %}">Post</a>
                                 <a class="item" href="{% url 'group_post_list' %}">Group Post</a>
                             </div>
                         </div>
                         <a class="item {% if active_link == 'record_list' %}active{% endif %}" href="{% url 'record_list' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Record</a>
                         <a class="item {% if active_link == '111' %}active{% endif %}" href="{% url 'review' %}" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Review</a>
                     </div>
-                    <div class="right item" style="align-items:center;">
+                    <div class="right item">
                         <!-- <div class="item">
                             <div class="ui action left icon input">
                               <i class="search icon"></i>
@@ -446,20 +427,8 @@
                                 <i class="bell icon brown"></i>
                             </a>
                         </div>
-                        {% if is_authenticated %}
-                        <div class="ui dropdown item" style="padding: 0.5em;padding-bottom:0.7em;font-family: 'Itim', cursive;font-size:20px;">
-                            Hello, {{user.username}} !
-                            <div class="menu">
-                                <div class="header">{{user.email}}</div>
-                                <div class="ui divider attached"></div>
-                                <a class="item" href="">Change Information</a>
-                                <a class="item logout-link" style="color:#f05654 !important;width: 100%;">Log out</a>
-                            </div>
-                        </div>
-                        {% else %}
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/log-in">Log in</a>
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;" href= "/accounts/sign-up">Sign Up</a>
-                        {% endif %}
+                        <a class="ui brown button" href= "accounts/log-in" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Log in</a>
+                        <a class="ui brown button" href= "/accounts/sign-up" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Sign Up</a>
                     </div>
                 </div>
             </div>
@@ -514,7 +483,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block">
-						<h1 class="heading"><span>Dishes</span> on <span>Display</span></h1>
+						<h1 class="heading"><span>Dishes </span> on <span> Display</span></h1>
 						<ul>
 							{% for dish in dishes  %}
 							<a href="review/comments/?dish_id={{dish.id}}">
@@ -688,77 +657,22 @@
     updateTime();
 
 </script>
-<script>
-document.querySelectorAll(".logout-link").forEach(function(logoutLink) {
-    logoutLink.addEventListener("click", function(event) {
-        event.preventDefault();
-
-        fetch("/accounts/log-out/", {
-            method: 'POST',  
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-        }).then(response => {
-            window.location.reload();
-        }).catch(error => {
-            console.error("Error logging out:", error);
-        });
-    });
-});
-
-</script>
 {% endblock %}
 	</section>
 
 
     <div class="pusher">
-
-
-
-
-        <div class="ui vertical footer segment" style="border-top: 5px;background-color:#ffde7d">
+        <div class="ui vertical footer segment" style="padding:20px; border-top: 5px;background-color:#ffde7d">
             <div class="ui center aligned container">
-                <div class="ui stackable divided grid">
-                  <div class="three wide column">
-                    <h4 class="ui header">Group 1</h4>
-                    <div class="ui link list">
-                      <a href="#" class="item">Link One</a>
-                      <a href="#" class="item">Link Two</a>
-                      <a href="#" class="item">Link Three</a>
-                      <a href="#" class="item">Link Four</a>
-                    </div>
-                  </div>
-                  <div class="three wide column">
-                    <h4 class="ui header">Group 2</h4>
-                    <div class="ui link list">
-                      <a href="#" class="item">Link One</a>
-                      <a href="#" class="item">Link Two</a>
-                      <a href="#" class="item">Link Three</a>
-                      <a href="#" class="item">Link Four</a>
-                    </div>
-                  </div>
-                  <div class="three wide column">
-                    <h4 class="ui header">Group 3</h4>
-                    <div class="ui link list">
-                      <a href="#" class="item">Link One</a>
-                      <a href="#" class="item">Link Two</a>
-                      <a href="#" class="item">Link Three</a>
-                      <a href="#" class="item">Link Four</a>
-                    </div>
-                  </div>
-                  <div class="seven wide column">
-                    <h4 class="ui header">Footer Header</h4>
-                    <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
-                  </div>
-                </div>
-                <div class="ui section divider" style="color:#ffde7d;"></div>
+                <!--<div class="ui section divider" style="color:#ffde7d;"></div>-->
                 <img src="{% static 'img/avatar/cat1.png' %}" class="ui centered mini image">
-                <div class="ui horizontal small divided link list">
-                  <a class="item" href="#">Site Map</a>
+                <div class="ui horizontal small divided link list">Copyright © NIS3368-2024-A-Team6</div>
+                <!--<div class="ui horizontal small divided link list">
+                  <a class="item" href="/test_mp">Site Map</a>
                   <a class="item" href="#">Contact Us</a>
                   <a class="item" href="#">Terms and Conditions</a>
                   <a class="item" href="#">Privacy Policy</a>
-                </div>
+                </div>-->
               </div>
         </div>
     </div>
