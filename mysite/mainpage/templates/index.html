@@ -427,8 +427,8 @@
                                 <i class="bell icon brown"></i>
                             </a>
                         </div>
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Log in</a>
-                        <a class="ui brown button" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Sign Up</a>
+                        <a class="ui brown button" href= "accounts/log-in" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Log in</a>
+                        <a class="ui brown button" href= "/accounts/sign-up" style="padding: 0.5em;font-family: 'Itim', cursive;font-size:20px;">Sign Up</a>
                     </div>
                 </div>
             </div>
@@ -463,7 +463,7 @@
 								<div style="text-align: center; color: black;font-size: 20px;  font-weight: 600;">生活记录</div></a>
 							</div>
 							<div class="col-md-3">
-								<a href="/user/my_cv">
+								<a href="/accounts/log-in">
 								<img class="img-responsive" src="{% static 'img/home.png' %}" style="max-height: 300px; max-width: 300px" alt="">
 								<div style="text-align: center; color: black;font-size: 20px;  font-weight: 600;">个人主页</div></a>
 							</div>
@@ -493,7 +493,8 @@
 									</div>
 									<div class="content-right">
 										<h3>{{dish.name}}</h3>
-										<p style="height: 100px; overflow: hidden">描述：{{dish.description}}</p>
+										<p style="overflow: hidden;display:-webkit-box;-webkit-box-orient:vertical;
+										-webkit-line-clamp:7;text-overflow:ellipsis">描述：{{dish.description}}</p>
 										<p>食堂：{{dish.canteen}}</p>
 									</div>
 								</li>
