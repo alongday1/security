@@ -2,7 +2,18 @@
   --main-color: #3498db;  /* 定义一个主颜色 */
   --secondary-color: #2ecc71;  /* 定义一个次要颜色 */
   --text-color: #333;  /* 定义文本颜色 */
-  --div-color: #f7f3f0;
+  --div-color: white;
+}
+
+* {
+    font-family:'Noto Sans SC',sans-serif;
+}
+
+.div-block {
+    background-color:var(--div-color);
+    border:1px solid lightgray;
+    border-radius:5px;
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 #search_input {
@@ -21,18 +32,18 @@
 .tag_button {
     width: 80px;
     height: 35px;
-    background-color: rgba(246,189,101,0.7);
+    background-color: rgba(251,189,8,0.5);
     color: dark;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .tag_button.included {
-    background-color: rgba(225,106,49,0.7);
+    background-color: rgba(242,113,28,0.5);
 }
 
 .tag_button.excluded {
-    background-color: rgba(73,73,73,0.7);
+    background-color: rgba(178,163,121,0.5);
 }
 
 .tag_button:hover{
@@ -40,20 +51,19 @@
 }
 
 .restaurant-item {
-height: 50px;
-background-color: var(--div-color);
+    height: 50px;
 }
 
-.restaurant-item:active {
-background-color: #ffdebc;
+.restaurant-item:hover {
+    opacity: 0.5;
 }
 
 .restaurant-link {
-color: #a6daed;
+    color: dark !important;
 }
 
-.restaurant-link:focus {
-color: #ffdebc;
+.restaurant-link.selected {
+color: rgb(165,103,63) !important;
 }
 
 
@@ -64,7 +74,7 @@ color: #ffdebc;
     border-bottom: none;
     padding: 10px;
     margin-bottom: 0px;
-    background-color: #fdeee2;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(253,238,226,0.4) 50%, rgba(0, 0, 0, 0));
 }
 
 .dish-container:hover {
@@ -151,7 +161,7 @@ color: #ffdebc;
 }
 
 #selectTag {
-background-color: #ff8255;
+background-color: rgb(165,103,63);
 border: none;
 }
 
