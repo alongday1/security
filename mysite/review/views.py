@@ -441,9 +441,11 @@ def update_dish_info(request):
     return JsonResponse({"error": "请求方法错误"}, status=400)
 
 
-@login_required
 def add_image(request):
     if request.method == "POST":
+        if request.user.is_authenticated == False:
+            return JsonResponse({'message': "请先登录！", 'success': False})
+
         dish_id = int(request.POST.get('dish_id'))
         dish = Dish.objects.get(id=dish_id)
         images = request.FILES.getlist("file-input")  # 获取上传的多张图片
@@ -474,6 +476,5 @@ def add_image(request):
 
         updated_images = [image.image.url for image in dish.images.filter(is_main=False)]
 
-
-        return JsonResponse({"updated_images": updated_images})
+        return JsonResponse({"updated_images": updated_images, "message": "图片添加成功！", "success": False})
     return JsonResponse({"error": "请求方法错误"}, status=400)
